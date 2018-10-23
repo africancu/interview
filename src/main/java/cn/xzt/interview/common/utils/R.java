@@ -46,7 +46,10 @@ public class R {
     }
 
     public static R error(String msg) {
-        return error(500, msg);
+        R r = new R();
+        r.code = ResultStatus.PARAM_EMPTY.getCode();
+        r.message = msg;
+        return r;
     }
 
     public static R error(int code, String msg) {

@@ -6,6 +6,7 @@ import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.Interview;
 import cn.xzt.interview.mapper.InterviewMapper;
 import cn.xzt.interview.service.InterviewService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,8 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public PageUtil<InterviewDTO> findAll(String status, Integer currentPage, Integer pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
         List<InterviewDTO> list=interviewMapper.findAll(status);
-
         return new PageUtil<>(list);
     }
 

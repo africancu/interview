@@ -3,7 +3,7 @@
 <mapper namespace="cn.xzt.interview.mapper.InterviewMapper">
 
     <sql id="Base_Column_List" >
-    interview_id, category_id, name, begin_time, end_time, compere, decription, type,
+    interview_id, category_id, name, begin_time, end_time, compere, description, type,
     status, pre_pic_url, pre_video_url, video_url, create_time, update_time
     </sql>
 
@@ -16,7 +16,7 @@
 
     <select id="selectByPrimaryKey" resultType="cn.xzt.interview.DTO.InterviewDTO" >
         select
-        interview_id,  name, begin_time, end_time, compere, decription, type,
+        interview_id,  name, begin_time, end_time, compere, description, type,
         status, pre_pic_url, pre_video_url, video_url, create_time, update_time
         from interview
         where interview_id = #{interviewId,jdbcType=INTEGER}
@@ -24,11 +24,11 @@
 
     <select id="findAll" resultType="cn.xzt.interview.DTO.InterviewDTO" >
         select
-        interview_id,  name, begin_time, end_time, compere, description, type,
-        status, pre_pic_url, pre_video_url, video_url, create_time, update_time
+        interview_id,  name,  compere, description, type,
+        status
         from interview
         <choose>
-            <when test=' _parameter != null and "" != _parameter '>
+            <when test=' status != null and "" != status '>
                 where status = #{status}
             </when>
         </choose>
@@ -65,8 +65,8 @@
             <if test="compere != null" >
                 compere = #{compere,jdbcType=VARCHAR},
             </if>
-            <if test="decription != null" >
-                decription = #{description,jdbcType=VARCHAR},
+            <if test="description != null" >
+                description = #{description,jdbcType=VARCHAR},
             </if>
             <if test="type != null" >
                 type = #{type,jdbcType=INTEGER},

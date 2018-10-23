@@ -19,9 +19,9 @@ public class Interview {
     //访谈名称
     private String name;
 
-    private Date beginTime;
+    private String beginTime;
 
-    private Date endTime;
+    private String endTime;
 
     //主持人
     private String compere;

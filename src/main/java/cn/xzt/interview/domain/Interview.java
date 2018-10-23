@@ -27,7 +27,7 @@ public class Interview {
     private String compere;
 
     //描述
-    private String decription;
+    private String description;
 
     //0视频直播，1图文直播
 

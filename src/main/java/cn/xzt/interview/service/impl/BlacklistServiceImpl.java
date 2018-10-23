@@ -26,6 +26,6 @@ public class BlacklistServiceImpl implements BlacklistService {
     public PageUtil<BlacklistDTO> list(Integer currentPage, Integer pageSize) {
         PageHelper.startPage(currentPage, pageSize);
         List<BlacklistDTO> list = blacklistMapper.list();
-        return new PageUtil<BlacklistDTO>(list);
+        return new PageUtil<>(list);
     }
 }

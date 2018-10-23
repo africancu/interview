@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface InterviewMapper {
     List<Interview> findAll();
-
+    Interview selectByPrimaryKey();
 }

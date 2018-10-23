@@ -45,13 +45,6 @@ public class R {
         return error(500, "未知异常，请联系管理员");
     }
 
-    public static R error(String msg) {
-        R r = new R();
-        r.code = ResultStatus.PARAM_EMPTY.getCode();
-        r.message = msg;
-        return r;
-    }
-
     public static R error(int code, String msg) {
         R r = new R();
         r.code = code;

@@ -1,6 +1,7 @@
 package cn.xzt.interview.mapper;
 
 import cn.xzt.interview.DTO.BlacklistDTO;
+import cn.xzt.interview.domain.Blacklist;
 
 import java.util.List;
 
@@ -12,4 +13,10 @@ import java.util.List;
 public interface BlacklistMapper {
 
     List<BlacklistDTO> list();
+
+    Integer create(Blacklist blacklist);
+
+    Blacklist selectBlacklistById(Integer id);
+
+    void remove(Integer id);
 }

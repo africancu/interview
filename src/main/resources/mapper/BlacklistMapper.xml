@@ -6,5 +6,17 @@
         select * from blacklist
     </select>
 
+    <insert id="create" parameterType="cn.xzt.interview.domain.Blacklist" useGeneratedKeys="true" keyProperty="blacklistId">
+        INSERT INTO blacklist (ip, visitor, status) VALUES (#{ip}, #{visitor}, 1)
+    </insert>
+
+    <select id="selectBlacklistById" resultType="cn.xzt.interview.domain.Blacklist">
+        SELECT * FROM blacklist WHERE blacklist_id = #{id}
+    </select>
+
+    <delete id="remove">
+        DELETE FROM blacklist WHERE blacklist_id = #{id}
+    </delete>
+
 
 </mapper>

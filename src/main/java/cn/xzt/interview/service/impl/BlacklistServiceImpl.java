@@ -2,6 +2,7 @@ package cn.xzt.interview.service.impl;
 
 import cn.xzt.interview.DTO.BlacklistDTO;
 import cn.xzt.interview.common.utils.PageUtil;
+import cn.xzt.interview.domain.Blacklist;
 import cn.xzt.interview.mapper.BlacklistMapper;
 import cn.xzt.interview.service.BlacklistService;
 import com.github.pagehelper.Page;
@@ -27,5 +28,17 @@ public class BlacklistServiceImpl implements BlacklistService {
         PageHelper.startPage(currentPage, pageSize);
         List<BlacklistDTO> list = blacklistMapper.list();
         return new PageUtil<>(list);
+    }
+
+    @Override
+    public Blacklist create(Blacklist blacklist) {
+        Integer integer = blacklistMapper.create(blacklist);
+        Blacklist blacklist_result = blacklistMapper.selectBlacklistById(blacklist.getBlacklistId());
+        return blacklist_result;
+    }
+
+    @Override
+    public void remove(Integer id) {
+        blacklistMapper.remove(id);
     }
 }

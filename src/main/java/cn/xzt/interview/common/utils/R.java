@@ -1,5 +1,6 @@
 package cn.xzt.interview.common.utils;
 
+import cn.xzt.interview.common.constant.ResultStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,6 @@ import lombok.NoArgsConstructor;
  * @Description: 响应体
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class R {
     /**
      * 错误码
@@ -25,5 +24,36 @@ public class R {
      * 具体内容
      */
     private Object result;
+
+
+    public R(){
+        code = ResultStatus.OK.getCode();
+        message = ResultStatus.OK.getMessage();
+    }
+
+    public static R ok(Object result){
+        R r = new R();
+        r.result = result;
+        return r;
+    }
+
+    public static R ok() {
+        return new R();
+    }
+
+    public static R error() {
+        return error(500, "未知异常，请联系管理员");
+    }
+
+    public static R error(String msg) {
+        return error(500, msg);
+    }
+
+    public static R error(int code, String msg) {
+        R r = new R();
+        r.code = code;
+        r.message = msg;
+        return r;
+    }
 
 }

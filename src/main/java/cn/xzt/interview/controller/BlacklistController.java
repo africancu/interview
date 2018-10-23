@@ -7,7 +7,6 @@ import cn.xzt.interview.common.utils.R;
 import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.domain.Blacklist;
 import cn.xzt.interview.service.BlacklistService;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

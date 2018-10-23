@@ -8,6 +8,8 @@ spring:
 
 mybatis:
   config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath*:mapper/*Mapper.xml
+
 logging:
   config: classpath:logback-spring.xml
 

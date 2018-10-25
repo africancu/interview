@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xzt.interview.mapper.InterviewGetPicMapper">
+
+    <select id="getImages" parameterType="cn.xzt.interview.vo.GetInterviewPicVO" resultType="cn.xzt.interview.domain.InterviewPic">
+        select i.pic_id as picId,
+        i.interview_id as interviewId,
+        i.pic_url as picUrl,
+        i.create_time as createTime,
+        i.update_time as updateTime
+        from interview_pic i
+        where i.interview_id=#{interviewId}
+    </select>
+</mapper>

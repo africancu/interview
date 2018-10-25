@@ -22,4 +22,5 @@ public interface CommentMapper {
     int updateContent(@Param("id") int commentId, @Param("content") String content,@Param("status") int status);
 
     List<CommentDTO> selectByInterviewId(@Param("interviewId") int interviewId);
+
 }

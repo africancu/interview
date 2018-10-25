@@ -1,5 +1,6 @@
 package cn.xzt.interview.service.impl;
 
+import cn.xzt.interview.DTO.CommentDTO;
 import cn.xzt.interview.common.utils.BadWordUtil;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.common.utils.StringUtil;
@@ -80,6 +81,13 @@ public class CommentsServiceImpl implements CommentsService {
 
         List<CommentReply> comments = mCommentReplyMapper.comments(interviewId);
 
+        return new PageUtil<>(comments);
+    }
+
+    @Override
+    public PageUtil<CommentDTO> selectByInterviewId(int currentPage, int pageSize, int interviewId) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<CommentDTO> comments = mCommentMapper.selectByInterviewId(interviewId);
         return new PageUtil<>(comments);
     }
 }

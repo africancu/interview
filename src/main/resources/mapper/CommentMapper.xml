@@ -17,7 +17,7 @@
         UPDATE `comment` SET content=#{content},status=#{status} WHERE comment_id = #{id}
     </update>
 
-    <select id="selectByInterviewId">
-        SELECT * FROM `comment` WHERE interview_id=#{interviewId}
+    <select id="selectByInterviewId" resultType="cn.xzt.interview.DTO.CommentDTO">
+        SELECT * FROM `comment` WHERE interview_id=#{interviewId} AND status=0
     </select>
 </mapper>

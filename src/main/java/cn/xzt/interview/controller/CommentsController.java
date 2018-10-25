@@ -1,5 +1,6 @@
 package cn.xzt.interview.controller;
 
+import cn.xzt.interview.DTO.CommentDTO;
 import cn.xzt.interview.common.constant.ResultStatus;
 import cn.xzt.interview.common.utils.IpUtil;
 import cn.xzt.interview.common.utils.PageUtil;
@@ -110,6 +111,19 @@ public class CommentsController {
         }
 
         return R.error(ResultStatus.ERROR.getCode(), ResultStatus.ERROR.getMessage());
+    }
+
+    /**
+     * 获取未审核评论
+     *
+     * @param interviewId 访谈ID
+     * @param currentPage 当前页码
+     * @param pageSize    当前页数据条数
+     */
+    @GetMapping("/noaudit")
+    public R noaudit(@RequestParam int interviewId, @RequestParam int currentPage, @RequestParam int pageSize) {
+        PageUtil<CommentDTO> comments = mCommentsService.selectByInterviewId(currentPage, pageSize, interviewId);
+        return R.ok(comments);
     }
 
     /**

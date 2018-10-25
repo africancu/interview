@@ -1,5 +1,6 @@
 package cn.xzt.interview.service;
 
+import cn.xzt.interview.DTO.CommentDTO;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.CommentReply;
 
@@ -52,7 +53,13 @@ public interface CommentsService {
      *
      * @param currentPage 当前页数
      * @param pageSize    当前页数据条数
-     * @param interviewId 谈论 ID
+     * @param interviewId 访谈 ID
      */
     PageUtil<CommentReply> comments(int currentPage, int pageSize, int interviewId);
+
+    /**
+     * 未审核评论列表
+     * @param interviewId 访谈 ID
+     */
+    PageUtil<CommentDTO> selectByInterviewId(int currentPage, int pageSize, int interviewId);
 }

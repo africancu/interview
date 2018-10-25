@@ -2,9 +2,11 @@ package cn.xzt.interview.controller;
 
 import cn.xzt.interview.DTO.InterviewDTO;
 import cn.xzt.interview.DTO.SpeakerDTO;
+import cn.xzt.interview.common.constant.ResultStatus;
 import cn.xzt.interview.common.utils.FileUploadUtil;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.common.utils.R;
+import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.domain.Interview;
 import cn.xzt.interview.service.InterviewService;
 import com.github.pagehelper.PageHelper;
@@ -186,10 +188,15 @@ public class InterviewController {
         R basicResponse = new R();
 
         try {
+            if(StringUtil.isBlank(id)){
+                return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+            }
             InterviewDTO idto=interviewService.selectByPrimaryKey(id);
-            List<SpeakerDTO> speakerDTOList=interviewService.findByinterviewId(id);
-            if(speakerDTOList!=null && speakerDTOList.size()>0){
-                idto.setSpeakerList(speakerDTOList);
+            if(null!=idto){
+                List<SpeakerDTO> speakerDTOList=interviewService.findByinterviewId(id);
+                if(speakerDTOList!=null && speakerDTOList.size()>0){
+                    idto.setSpeakerList(speakerDTOList);
+                }
             }
             basicResponse.setCode(200);
             basicResponse.setMessage("成功");

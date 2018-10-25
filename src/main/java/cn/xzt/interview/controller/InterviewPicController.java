@@ -5,7 +5,7 @@ import cn.xzt.interview.common.constant.ResultStatus;
 import cn.xzt.interview.common.utils.R;
 import cn.xzt.interview.domain.InterviewPic;
 
-import cn.xzt.interview.service.InterviewService;
+import cn.xzt.interview.service.InterviewPicService;
 import cn.xzt.interview.vo.GetInterviewPicVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
@@ -37,7 +36,7 @@ import java.util.List;
 @Slf4j
 public class InterviewPicController {
     @Autowired
-    private InterviewService interviewService;
+    private InterviewPicService interviewPicService;
 
     /**
      * 删除访谈
@@ -48,7 +47,7 @@ public class InterviewPicController {
     public R removeInterview(@RequestParam(value = "id") Integer id) {
         R r = new R();
         if (id != null) {
-            interviewService.removeInterview(id);
+            interviewPicService.removeInterview(id);
             r.setCode(ResultStatus.OK.getCode());
             r.setMessage(ResultStatus.OK.getMessage());
             return r;
@@ -68,7 +67,7 @@ public class InterviewPicController {
     @RequestMapping("/images")
     public R getImages(@RequestBody GetInterviewPicVO getInterviewPicVO) {
         R r = new R();
-        List<InterviewPic> interviewPicList = interviewService.getImages(getInterviewPicVO);
+        List<InterviewPic> interviewPicList = interviewPicService.getImages(getInterviewPicVO);
         if (interviewPicList != null && interviewPicList.size() > 0) {
             r.setCode(ResultStatus.OK.getCode());
             r.setMessage(ResultStatus.OK.getMessage());
@@ -112,7 +111,7 @@ public class InterviewPicController {
                     interviewPic.setInterviewId(Integer.valueOf(interviewId).intValue());
                     interviewPic.setPicUrl(httpUrl + uploadRoot + "/" + relativePath.replace("\\", "/") + fileFullName);
                     FileUtils.copyInputStreamToFile(file.getInputStream(), new File(dir + fileFullName));
-                    interviewService.loadPic(interviewPic);
+                    interviewPicService.loadPic(interviewPic);
                 }
 
             }
@@ -133,7 +132,7 @@ public class InterviewPicController {
     public R removePic(@RequestBody List<InterviewPic> interviewPicList) {
         R r = new R();
         for(InterviewPic interviewPic:interviewPicList){
-            interviewService.removePic(interviewPic);
+            interviewPicService.removePic(interviewPic);
         }
         r.setCode(ResultStatus.OK.getCode());
         r.setMessage(ResultStatus.OK.getMessage());

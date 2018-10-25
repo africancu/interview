@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 @SpringBootApplication
 @MapperScan("cn.xzt.interview.mapper")
 @Controller
-@MapperScan("cn.xzt.interview.mapper")
 public class Application {
 
     public static void main(String[] args) {

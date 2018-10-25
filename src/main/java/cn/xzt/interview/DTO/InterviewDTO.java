@@ -1,16 +1,19 @@
-package cn.xzt.interview.domain;
+package cn.xzt.interview.DTO;
 
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description:
  * @Auther: lyj
- * @Date: 2018/10/23 10:00
+ * @Date: 2018/10/23 11:37
  */
 @Data
-public class Interview {
+public class InterviewDTO {
+    List<SpeakerDTO> speakerList;
+
     private Integer interviewId;
 
     //访谈分类编号
@@ -19,9 +22,9 @@ public class Interview {
     //访谈名称
     private String name;
 
-    private String beginTime;
+    private Date beginTime;
 
-    private String endTime;
+    private Date endTime;
 
     //主持人
     private String compere;
@@ -48,5 +51,4 @@ public class Interview {
     private Date createTime;
 
     private Date updateTime;
-
 }

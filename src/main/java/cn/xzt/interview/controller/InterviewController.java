@@ -84,7 +84,7 @@ public class InterviewController {
 
         try {
             if(interview.getInterviewId()==null || interview.getInterviewId()==0){
-                basicResponse.setCode(500);
+                basicResponse.setCode(600);
                 basicResponse.setMessage("访谈编号不能为空！");
                 return basicResponse;
             }
@@ -123,7 +123,7 @@ public class InterviewController {
 
         try {
             if(interview.getInterviewId()==null || interview.getInterviewId()==0){
-                basicResponse.setCode(500);
+                basicResponse.setCode(600);
                 basicResponse.setMessage("访谈编号不能为空！");
                 return basicResponse;
             }
@@ -160,7 +160,7 @@ public class InterviewController {
         R basicResponse = new R();
         try {
             if (currentPage == null || pageSize == null){
-                basicResponse.setCode(500);
+                basicResponse.setCode(600);
                 basicResponse.setMessage("缺少分页参数");
                 return basicResponse;
             }

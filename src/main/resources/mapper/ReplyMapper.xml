@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xzt.interview.mapper.ReplyMapper">
+
+    <insert id="insert">
+
+      INSERT INTO `reply` (comment_id,content,speaker_id) VALUES (#{commentId},#{content},#{speakerId})
+
+    </insert>
+
+
+    <update id="updateContent">
+        UPDATE `reply` SET content=#{content} WHERE reply_id = #{id}
+    </update>
+
+    <select id="selectByInterviewId">
+        SELECT * FROM `reply` WHERE interview_id=#{interviewId}
+    </select>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xzt.interview.mapper.CommentReplyMapper">
+
+    <resultMap id="resultMap" type="cn.xzt.interview.domain.CommentReply">
+        <association property="comment" javaType="cn.xzt.interview.DTO.CommentDTO">
+            <id column="c_comment_id" property="commentId"/>
+            <result column="c_interview_id" property="interviewId"/>
+            <result column="c_visitor" property="visitor"/>
+            <!--<result column="visitor_ip" property="visitorIp"/>-->
+            <result column="c_content" property="content"/>
+            <result column="c_status" property="status"/>
+            <result column="c_create_time" property="createTime"/>
+            <result column="c_update_time" property="updateTime"/>
+        </association>
+
+        <association property="reply" javaType="cn.xzt.interview.DTO.ReplyDTO">
+            <id column="r_reply_id" property="replyId"/>
+            <result column="r_comment_id" property="commentId"/>
+            <result column="r_content" property="content"/>
+            <result column="r_speaker_id" property="speakerId"/>
+            <result column="r_create_time" property="createTime"/>
+            <result column="r_update_time" property="updateTime"/>
+        </association>
+    </resultMap>
+
+    <select id="comments" resultMap="resultMap">
+        SELECT
+        c.comment_id as c_comment_id,
+        c.interview_id as c_interview_id,
+        c.visitor as c_visitor,
+        c.content as c_content,
+        c.status as c_status,
+        c.create_time as c_create_time,
+        c.update_time as c_update_time,
+
+        r.reply_id as r_reply_id,
+        r.comment_id as r_comment_id,
+        r.content as r_content,
+        r.speaker_id as r_speaker_id,
+        r.create_time as r_create_time,
+        r.update_time as r_update_time
+
+        FROM `comment`AS c LEFT JOIN reply AS r ON c.comment_id = r.comment_id WHERE c.interview_id = #{interviewId} AND c.status =1
+    </select>
+
+</mapper>

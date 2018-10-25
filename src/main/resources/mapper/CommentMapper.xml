@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xzt.interview.mapper.CommentMapper">
+
+    <insert id="insert">
+
+      INSERT INTO comment (interview_id,visitor,visitor_ip,content) VALUES (#{interviewId},#{visitorName},#{visitorIp},#{content})
+
+    </insert>
+
+    <select id="selectIp">
+        SELECT visitor_ip FROM `comment` WHERE comment_id = #{id}
+    </select>
+
+    <update id="updateContent">
+
+        UPDATE `comment` SET content=#{content},status=#{status} WHERE comment_id = #{id}
+    </update>
+
+    <select id="selectByInterviewId">
+        SELECT * FROM `comment` WHERE interview_id=#{interviewId}
+    </select>
+</mapper>

@@ -68,9 +68,13 @@ public class CommentsController {
             }
         }
 
-        mCommentsService.create(interviewId, visitorName, content, ip);
+        boolean result = mCommentsService.create(interviewId, visitorName, content, ip);
 
-        return R.ok();
+        if (result) {
+            return R.ok();
+        }
+
+        return R.error(ResultStatus.ERROR.getCode(), ResultStatus.ERROR.getMessage());
 
     }
 

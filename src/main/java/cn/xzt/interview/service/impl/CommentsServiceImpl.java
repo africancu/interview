@@ -38,9 +38,9 @@ public class CommentsServiceImpl implements CommentsService {
 
 
     @Override
-    public int create(int interviewId, String visitorName, String content, String visitorIp) {
+    public boolean create(int interviewId, String visitorName, String content, String visitorIp) {
         String replaceContent = mBadWordUtil.replaceBadWord(content);
-        return mCommentMapper.insert(interviewId, visitorName, replaceContent, visitorIp);
+        return mCommentMapper.insert(interviewId, visitorName, replaceContent, visitorIp) >= 0;
     }
 
     @Override

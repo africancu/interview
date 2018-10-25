@@ -17,7 +17,7 @@ public interface CommentsService {
      * @param content     评论内容
      * @param visitorIp   游客IP
      */
-    int create(int interviewId, String visitorName, String content, String visitorIp);
+    boolean create(int interviewId, String visitorName, String content, String visitorIp);
 
     /**
      * 查询IP

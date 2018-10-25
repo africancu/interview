@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public enum ResultStatus {
     OK(200, "成功"),
+    ERROR(-1,"操作失败"),
     BAD_REQUEST(400, "错误请求"),
     FORBIDDEN(403, "禁止访问"),
     NOT_FOUND(404, "未找到结果"),

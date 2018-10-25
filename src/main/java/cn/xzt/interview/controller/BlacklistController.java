@@ -7,7 +7,6 @@ import cn.xzt.interview.common.utils.R;
 import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.domain.Blacklist;
 import cn.xzt.interview.service.BlacklistService;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +29,16 @@ public class BlacklistController {
     /**
      * 分页查询黑名单列表
      *
-     * @param currentPage
+     * @param pageNum
      * @param pageSize
      * @return
      */
     @GetMapping("/list")
-    public R list(Integer currentPage, Integer pageSize) {
-        if (currentPage == null || pageSize == null) {
+    public R list(Integer pageNum, Integer pageSize) {
+        if (pageNum == null || pageSize == null) {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
         }
-        PageUtil<BlacklistDTO> list = blacklistService.list(currentPage, pageSize);
+        PageUtil<BlacklistDTO> list = blacklistService.list(pageNum, pageSize);
         return R.ok(list);
     }
 

@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 /**
  * 
@@ -26,6 +27,7 @@ public class FileUploadUtil {
 	public static String type = "5";
 
 	public static String url = "";
+
 
 	/**
 	 * 初始化路径
@@ -120,13 +122,14 @@ public class FileUploadUtil {
 		return null;
 	}
 
-	public static String upload(MultipartFile file, HttpServletRequest request) throws Exception {
+	public static String upload(String url,MultipartFile file, HttpServletRequest request) throws Exception {
 		// 原始名称
 		String originalFilename = file.getOriginalFilename();
 		// 上传文件
 		if (file != null && originalFilename != null && originalFilename.length() > 0) {
 
-			String realPath = request.getSession().getServletContext().getRealPath("/upload/");
+			//String realPath = request.getSession().getServletContext().getRealPath("/upload/");
+			String realPath =url;
 
 			// String realPath = request.getContextPath()
 			// 存储文件的物理路径
@@ -164,7 +167,7 @@ public class FileUploadUtil {
 			// + FilenameUtils.getExtension(file.getOriginalFilename());
 			// file.transferTo(new File(dir, fileName));
 
-			return "upload/" + fileName;
+			return  fileName;
 		}
 		return null;
 	}

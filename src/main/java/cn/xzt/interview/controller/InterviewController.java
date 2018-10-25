@@ -12,6 +12,8 @@ import cn.xzt.interview.service.InterviewService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -33,6 +36,12 @@ public class InterviewController {
 
     @Autowired
     private InterviewService interviewService;
+
+    @Value("${nginx_url}")
+    private String urls;
+
+    @Value("${physics_url}")
+    private String physics_url;
 
     /**
      * 新增访谈
@@ -50,12 +59,12 @@ public class InterviewController {
         try {
             if (files != null && files.getSize() != 0
                     && !"0".equals(files.getSize())) {
-                String img = FileUploadUtil.upload(files, request);
+                String img = FileUploadUtil.upload(physics_url,files, request);
                 if(interview.getType()=="0" || "0".equals(interview.getType())){ //视频
-                    interview.setPreVideoUrl(img);
+                    interview.setPreVideoUrl(urls+img);
                 }else {
                     //图文预告
-                    interview.setPrePicUrl(img);
+                    interview.setPrePicUrl(urls+img);
                 }
             }
             interviewService.insertInterview(interview);
@@ -89,12 +98,12 @@ public class InterviewController {
                 return basicResponse;
             }
             if (files != null && files.getSize() != 0 && !"0".equals(files.getSize())) {
-                String img = FileUploadUtil.upload(files, request);
+                String img = FileUploadUtil.upload(physics_url,files, request);
                 if(interview.getType()=="0" || "0".equals(interview.getType())){ //视频
-                    interview.setPreVideoUrl(img);
+                    interview.setPreVideoUrl(urls+img);
                 }else {
                     //图文预告
-                    interview.setPrePicUrl(img);
+                    interview.setPrePicUrl(urls+img);
                 }
             }
             interviewService.updateInterview(interview);
@@ -127,9 +136,10 @@ public class InterviewController {
                 basicResponse.setMessage("访谈编号不能为空！");
                 return basicResponse;
             }
+
             if (files != null && files.getSize() != 0 && !"0".equals(files.getSize())) {
-                String img = FileUploadUtil.upload(files, request);
-                    interview.setVideoUrl(img);//视频地址
+                String img = FileUploadUtil.upload(physics_url,files, request);
+                    interview.setVideoUrl(urls+img);//视频地址
             }
             interviewService.updateInterview(interview);
             basicResponse.setCode(200);

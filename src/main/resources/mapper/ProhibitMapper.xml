@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xzt.interview.mapper.ProhibitMapper">
+
+    <select id="list" resultType="cn.xzt.interview.domain.ProhibitWord">
+        SELECT word_id, word FROM `prohibit_word`
+        <if test="value != null and value != ''">
+            WHERE word LIKE '${value}%'
+        </if>
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="wordId">
+        INSERT INTO prohibit_word (word) VALUES (#{word})
+    </insert>
+
+    <select id="selectById" resultType="cn.xzt.interview.domain.ProhibitWord">
+        select word_id, word from prohibit_word where word_id = #{id}
+    </select>
+
+    <insert id="batchAdd">
+        INSERT INTO prohibit_word (word) VALUES
+        <foreach collection="list"  item="item" separator=",">
+            (#{item})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByIds">
+        delete from prohibit_word where word_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getAllWord" resultType="java.lang.String">
+        select word from prohibit_word
+    </select>
+
+
+</mapper>

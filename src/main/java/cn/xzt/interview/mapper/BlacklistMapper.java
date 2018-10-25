@@ -16,7 +16,10 @@ public interface BlacklistMapper {
 
     Integer create(Blacklist blacklist);
 
+
     Blacklist selectBlacklistById(Integer id);
 
     void remove(Integer id);
+
+    Blacklist selectByIp(String ip);
 }

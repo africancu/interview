@@ -18,5 +18,8 @@
         DELETE FROM blacklist WHERE blacklist_id = #{id}
     </delete>
 
+    <select id="selectByIp" resultType="cn.xzt.interview.domain.Blacklist">
+        SELECT * FROM blacklist WHERE ip = #{ip}
+    </select>
 
 </mapper>

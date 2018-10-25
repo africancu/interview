@@ -1,5 +1,6 @@
 package cn.xzt.interview.service.impl;
 
+import cn.xzt.interview.common.utils.BadWordUtil;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.domain.CommentReply;
@@ -24,18 +25,22 @@ public class CommentsServiceImpl implements CommentsService {
     private CommentMapper mCommentMapper;
     private ReplyMapper mReplyMapper;
     private CommentReplyMapper mCommentReplyMapper;
+    private BadWordUtil mBadWordUtil;
 
     @Autowired
-    public CommentsServiceImpl(CommentMapper commentMapper, ReplyMapper replyMapper, CommentReplyMapper commentReplyMapper) {
+    public CommentsServiceImpl(CommentMapper commentMapper, ReplyMapper replyMapper, CommentReplyMapper commentReplyMapper,
+                               BadWordUtil badWordUtil) {
         mCommentMapper = commentMapper;
         mReplyMapper = replyMapper;
         mCommentReplyMapper = commentReplyMapper;
+        mBadWordUtil = badWordUtil;
     }
 
 
     @Override
     public int create(int interviewId, String visitorName, String content, String visitorIp) {
-        return mCommentMapper.insert(interviewId, visitorName, content, visitorIp);
+        String replaceContent = mBadWordUtil.replaceBadWord(content);
+        return mCommentMapper.insert(interviewId, visitorName, replaceContent, visitorIp);
     }
 
     @Override

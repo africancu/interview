@@ -3,7 +3,6 @@ package cn.xzt.interview.service;
 import cn.xzt.interview.DTO.BlacklistDTO;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.Blacklist;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 

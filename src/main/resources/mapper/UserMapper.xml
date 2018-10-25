@@ -4,7 +4,7 @@
 
     <select id="login" resultType="cn.xzt.interview.DTO.UserDTO">
           SELECT
-                u.user_id AS userId,
+                u.user_id,
                 u.`name`,
                 r.`code` AS roleCode,
                 r.`name` AS roleName

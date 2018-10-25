@@ -4,6 +4,7 @@ import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.ProhibitWord;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Description:
@@ -17,5 +18,9 @@ public interface ProhibitService {
     ProhibitWord create(ProhibitWord word);
 
     void remove(List<String> list);
+
+    void batchImport(List<String> list);
+
+    Set<String > getAllWord();
 
 }

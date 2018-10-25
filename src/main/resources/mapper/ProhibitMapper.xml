@@ -19,8 +19,8 @@
 
     <insert id="batchAdd">
         INSERT INTO prohibit_word (word) VALUES
-        <foreach collection="list" open="(" close=")" item="item" separator=",">
-            #{item.word}
+        <foreach collection="list"  item="item" separator=",">
+            (#{item})
         </foreach>
     </insert>
 
@@ -30,6 +30,10 @@
             #{item}
         </foreach>
     </delete>
+
+    <select id="getAllWord" resultType="java.lang.String">
+        select word from prohibit_word
+    </select>
 
 
 </mapper>

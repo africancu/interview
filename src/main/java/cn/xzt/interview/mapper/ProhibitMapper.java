@@ -3,6 +3,7 @@ package cn.xzt.interview.mapper;
 import cn.xzt.interview.domain.ProhibitWord;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Description:
@@ -20,6 +21,8 @@ public interface ProhibitMapper {
     void deleteByIds(List<String> list);
 
     ProhibitWord selectById(Integer id);
+
+    Set<String> getAllWord();
 
 
 }

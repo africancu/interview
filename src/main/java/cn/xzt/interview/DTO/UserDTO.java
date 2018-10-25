@@ -12,7 +12,6 @@ public class UserDTO {
 
     private Integer userId;
     private String name;
-    private Integer roleId;
     private String roleCode;
     private String roleName;
 

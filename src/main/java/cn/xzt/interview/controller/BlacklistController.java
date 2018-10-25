@@ -29,16 +29,16 @@ public class BlacklistController {
     /**
      * 分页查询黑名单列表
      *
-     * @param currentPage
+     * @param pageNum
      * @param pageSize
      * @return
      */
     @GetMapping("/list")
-    public R list(Integer currentPage, Integer pageSize) {
-        if (currentPage == null || pageSize == null) {
+    public R list(Integer pageNum, Integer pageSize) {
+        if (pageNum == null || pageSize == null) {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
         }
-        PageUtil<BlacklistDTO> list = blacklistService.list(currentPage, pageSize);
+        PageUtil<BlacklistDTO> list = blacklistService.list(pageNum, pageSize);
         return R.ok(list);
     }
 

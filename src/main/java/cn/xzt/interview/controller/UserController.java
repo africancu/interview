@@ -3,6 +3,7 @@ package cn.xzt.interview.controller;
 import cn.xzt.interview.DTO.UserDTO;
 import cn.xzt.interview.common.constant.ResultStatus;
 import cn.xzt.interview.common.utils.R;
+import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,10 +23,12 @@ public class UserController {
 
     @PostMapping("login")
     public R login(String username, String password){
-        System.out.println(username + "---" + password);
+        if (StringUtil.isBlank(username) || StringUtil.isBlank(password)){
+            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+        }
         UserDTO userDTO = userService.login(username, password);
         if (null == userDTO){
-            return R.error(ResultStatus.SERVER_ERROR.getCode(), "用户名或者密码错误");
+            return R.error(ResultStatus.ERROR.getCode(), "用户名或者密码错误");
         }else{
             return R.ok(userDTO);
         }

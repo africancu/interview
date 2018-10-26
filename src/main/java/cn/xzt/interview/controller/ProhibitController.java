@@ -29,7 +29,7 @@ public class ProhibitController {
     private ProhibitService prohibitService;
 
     @GetMapping("/list")
-    public R list(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam String keyWord) {
+    public R list(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam(required = false) String keyWord) {
 //        if (StringUtil.isBlank(pageNum) || StringUtil.isBlank(pageSize)) {
 //            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
 //        }

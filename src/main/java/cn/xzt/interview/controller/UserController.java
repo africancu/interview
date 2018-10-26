@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2018/10/22 18:04
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -26,7 +26,7 @@ public class UserController {
      *
      * @param params
      */
-    @PostMapping("login")
+    @PostMapping("/login")
     public R login(@RequestParam String params) {
         R response = ParamCheckUtil.checkPrams(params, "username", "password");
         if (response != null) {

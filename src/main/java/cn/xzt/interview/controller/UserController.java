@@ -27,7 +27,7 @@ public class UserController {
      * @param params
      */
     @PostMapping("/login")
-    public R login(@RequestParam String params) {
+    public R login(@RequestBody String params) {
         R response = ParamCheckUtil.checkPrams(params, "username", "password");
         if (response != null) {
             return response;

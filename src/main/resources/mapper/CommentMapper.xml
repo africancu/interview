@@ -8,7 +8,7 @@
 
     </insert>
 
-    <select id="selectIp">
+    <select id="selectIp" resultType="java.lang.String">
         SELECT visitor_ip FROM `comment` WHERE comment_id = #{id}
     </select>
 

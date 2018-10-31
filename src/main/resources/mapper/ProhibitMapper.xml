@@ -7,6 +7,7 @@
         <if test="value != null and value != ''">
             WHERE word LIKE '${value}%'
         </if>
+        ORDER BY create_time DESC
     </select>
 
     <insert id="add" useGeneratedKeys="true" keyProperty="wordId">

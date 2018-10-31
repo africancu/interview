@@ -18,7 +18,6 @@
     </update>
 
     <select id="selectByInterviewId" resultType="cn.xzt.interview.DTO.CommentDTO">
---         SELECT * FROM `comment` WHERE interview_id=#{interviewId} AND status=0
         SELECT comment.*  FROM `comment` WHERE comment.interview_id=#{interviewId} AND comment.status=0
         AND ( comment.visitor_ip IN ( SELECT ip FROM blacklist WHERE status = 0  ) OR comment.visitor_ip NOT IN (SELECT ip FROM blacklist ) )
     </select>

@@ -14,4 +14,5 @@ public class VisitorDTO {
     private int interviewId;
     private String ip;
     private String name;
+    private String createTime;
 }

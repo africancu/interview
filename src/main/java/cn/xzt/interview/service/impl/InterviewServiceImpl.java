@@ -2,9 +2,11 @@ package cn.xzt.interview.service.impl;
 
 import cn.xzt.interview.DTO.InterviewDTO;
 import cn.xzt.interview.DTO.SpeakerDTO;
+import cn.xzt.interview.DTO.VisitorDTO;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.Interview;
 import cn.xzt.interview.mapper.InterviewMapper;
+import cn.xzt.interview.mapper.VisitorMapper;
 import cn.xzt.interview.service.InterviewService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Autowired
     private InterviewMapper interviewMapper;
+
+    @Autowired
+    private VisitorMapper visitorMapper;
 
 
     @Override
@@ -60,5 +65,11 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     public void deleteSpeaker(String interviewId) {
         interviewMapper.deleteSpeaker( interviewId);
+    }
+
+    @Override
+    public List<VisitorDTO> visitors(int interviewId) {
+
+        return visitorMapper.findByInterviewId(interviewId);
     }
 }

@@ -2,6 +2,7 @@ package cn.xzt.interview.service;
 
 import cn.xzt.interview.DTO.InterviewDTO;
 import cn.xzt.interview.DTO.SpeakerDTO;
+import cn.xzt.interview.DTO.VisitorDTO;
 import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.Interview;
 
@@ -21,4 +22,6 @@ public interface InterviewService {
     void updateInterview(Interview interview);
     void insertSpeaker(Integer interviewId,String name);
     void deleteSpeaker(String interviewId);
+
+    List<VisitorDTO> visitors(int interviewId);
 }

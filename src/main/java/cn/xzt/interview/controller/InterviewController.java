@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -233,4 +235,16 @@ public class InterviewController {
 
     }
 
+    /**
+     * 获取嘉宾列表
+     * @param interviewId 访谈ID
+     */
+    @GetMapping("/speakers/{interviewId}")
+    public R speakersFromInterviewId(@PathVariable("interviewId") String interviewId) {
+
+        List<SpeakerDTO> speakerDTOList = interviewService.findByinterviewId(interviewId);
+
+        return R.ok(speakerDTOList);
+
+    }
 }

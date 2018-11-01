@@ -51,4 +51,14 @@ public class InterviewServiceImpl implements InterviewService {
     public void updateInterview(Interview interview) {
         interviewMapper.updateInterview(interview);
     }
+
+    @Override
+    public void insertSpeaker(Integer interviewId, String name) {
+        interviewMapper.insertSpeaker(interviewId,name);
+    }
+
+    @Override
+    public void deleteSpeaker(String interviewId) {
+        interviewMapper.deleteSpeaker( interviewId);
+    }
 }

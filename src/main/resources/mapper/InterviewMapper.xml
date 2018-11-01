@@ -34,7 +34,7 @@
         </choose>
     </select>
 
-    <insert id="insertInterview">
+    <insert id="insertInterview" useGeneratedKeys="true" keyProperty="interviewId">
     insert into interview (interview_id, category_id, name,
       begin_time, end_time, compere,
       description, type, status,
@@ -46,6 +46,15 @@
       #{prePicUrl,jdbcType=VARCHAR}, #{preVideoUrl,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR})
 
     </insert>
+
+    <insert id="insertSpeaker">
+        insert into speaker(interview_id,name) values (#{interviewId},#{name})
+    </insert>
+
+    <delete id="deleteSpeaker" >
+        DELETE from speaker where interview_id =#{interviewId}
+
+    </delete>
 
     <update id="updateInterview">
         update interview

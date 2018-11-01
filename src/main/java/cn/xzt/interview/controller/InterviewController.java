@@ -53,7 +53,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping("/create")
-    public R sava(MultipartFile files, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+    public R sava(MultipartFile files,String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
 
         try {
@@ -68,6 +68,13 @@ public class InterviewController {
                 }
             }
             interviewService.insertInterview(interview);
+            if(null!=speakername && speakername.length>0){
+
+                for ( String num : speakername ) {
+                    interviewService.insertSpeaker(interview.getInterviewId(),num);
+                }
+            }
+
             basicResponse.setCode(200);
             basicResponse.setMessage("成功");
         } catch (Exception e) {
@@ -88,7 +95,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping("/edit")
-    public R update(MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
+    public R update(MultipartFile files, String[] speakername,@Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
 
         try {
@@ -107,6 +114,12 @@ public class InterviewController {
                 }
             }
             interviewService.updateInterview(interview);
+            if(null!=speakername && speakername.length>0){
+                interviewService.deleteSpeaker((interview.getInterviewId()).toString());
+                for ( String num : speakername ) {
+                    interviewService.insertSpeaker(interview.getInterviewId(),num);
+                }
+            }
             basicResponse.setCode(200);
             basicResponse.setMessage("成功");
         } catch (Exception e) {

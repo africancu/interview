@@ -32,7 +32,7 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     public PageUtil<InterviewDTO> findAll(String status, Integer currentPage, Integer pageSize) {
         PageHelper.startPage(currentPage, pageSize);
-        List<InterviewDTO> list=interviewMapper.findAll(status);
+        List<InterviewDTO> list = interviewMapper.findAll(status);
         return new PageUtil<>(list);
     }
 
@@ -59,17 +59,19 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public void insertSpeaker(Integer interviewId, String name) {
-        interviewMapper.insertSpeaker(interviewId,name);
+        interviewMapper.insertSpeaker(interviewId, name);
     }
 
     @Override
     public void deleteSpeaker(String interviewId) {
-        interviewMapper.deleteSpeaker( interviewId);
+        interviewMapper.deleteSpeaker(interviewId);
     }
 
     @Override
-    public List<VisitorDTO> visitors(int interviewId) {
+    public PageUtil<VisitorDTO> visitors(int interviewId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<VisitorDTO> visitorDTOS = visitorMapper.findByInterviewId(interviewId);
+        return new PageUtil<>(visitorDTOS);
 
-        return visitorMapper.findByInterviewId(interviewId);
     }
 }

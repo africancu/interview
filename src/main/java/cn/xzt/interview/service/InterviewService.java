@@ -16,12 +16,18 @@ import java.util.List;
 public interface InterviewService {
 
     PageUtil<InterviewDTO> findAll(String status, Integer currentPage, Integer pageSize);
+
     List<SpeakerDTO> findByinterviewId(String interviewId);
+
     InterviewDTO selectByPrimaryKey(String interviewId);
+
     void insertInterview(Interview interview);
+
     void updateInterview(Interview interview);
-    void insertSpeaker(Integer interviewId,String name);
+
+    void insertSpeaker(Integer interviewId, String name);
+
     void deleteSpeaker(String interviewId);
 
-    List<VisitorDTO> visitors(int interviewId);
+    PageUtil<VisitorDTO> visitors(int interviewId, int currentPage, int pageSize);
 }

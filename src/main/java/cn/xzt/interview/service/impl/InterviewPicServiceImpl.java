@@ -67,5 +67,12 @@ public class InterviewPicServiceImpl implements InterviewPicService {
         }
     }
 
+    @Override
+    public void removePics(List<String> list) {
+        if(list!=null&&list.size()>0){
+            interviewRemovePicMapper.removePics(list);
+        }
+    }
+
 
 }

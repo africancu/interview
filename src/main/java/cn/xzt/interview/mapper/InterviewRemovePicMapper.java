@@ -18,4 +18,10 @@ public interface InterviewRemovePicMapper  {
      */
      void removePic(InterviewPic interviewPic);
 
+    /**
+     * 删除图片
+     */
+    void removePics(List<String> list);
+
+
 }

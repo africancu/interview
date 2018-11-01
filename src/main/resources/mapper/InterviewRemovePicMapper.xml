@@ -5,5 +5,10 @@
           delete from interview_pic where pic_id=#{picId}
     </delete>
 
-
+    <delete id="removePics">
+        delete from interview_pic where pic_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -2,11 +2,14 @@ package cn.xzt.interview.controller;
 
 import cn.xzt.interview.common.constant.ResultStatus;
 
+import cn.xzt.interview.common.utils.ParamCheckUtil;
 import cn.xzt.interview.common.utils.R;
+import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.domain.InterviewPic;
 
 import cn.xzt.interview.service.InterviewPicService;
 import cn.xzt.interview.vo.GetInterviewPicVO;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -23,9 +26,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 
 
 /**
@@ -98,7 +101,7 @@ public class InterviewPicController {
         String uploadRoot = "fileroot";
         // 根目录下存放文件的相对目录
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String format = dateFormat.format(date);
         String relativePath = format + "\\" + interviewId + "\\";
         // 文件的存放目录
@@ -131,12 +134,35 @@ public class InterviewPicController {
     @RequestMapping("/removePic")
     public R removePic(@RequestBody List<InterviewPic> interviewPicList) {
         R r = new R();
-        for(InterviewPic interviewPic:interviewPicList){
+        for (InterviewPic interviewPic : interviewPicList) {
             interviewPicService.removePic(interviewPic);
         }
         r.setCode(ResultStatus.OK.getCode());
         r.setMessage(ResultStatus.OK.getMessage());
-       return r;
+        return r;
     }
 
+    /**
+     * 删除图片
+     */
+    @RequestMapping("/removePics")
+    public R removePics(@RequestBody String params) {
+        R response = ParamCheckUtil.checkPrams(params, "ids");
+        if (response != null) {
+            return response;
+        }
+
+        JSONObject jsonObject = JSONObject.parseObject(params);
+        String ids = jsonObject.getString("ids");
+        log.info("传入的ids为----------> {}", ids);
+        if (StringUtil.isBlank(ids)) {
+            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+        }
+        String[] split = ids.split(",");
+        List<String> list = Arrays.asList(split);
+        interviewPicService.removePics(list);
+        return R.ok();
+
+
+    }
 }

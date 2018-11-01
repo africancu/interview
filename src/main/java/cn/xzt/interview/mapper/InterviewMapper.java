@@ -18,4 +18,12 @@ public interface InterviewMapper {
     InterviewDTO selectByPrimaryKey(@Param("interviewId") String interviewId);
     void insertInterview(Interview interview);
     void updateInterview(Interview interview);
+
+    /**
+     * 新增访谈嘉宾
+     * @param interviewId
+     * @param name
+     */
+    void insertSpeaker(@Param("interviewId") Integer interviewId,@Param("name") String name);
+    void deleteSpeaker(@Param("interviewId")  String interviewId);
 }

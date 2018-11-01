@@ -90,4 +90,18 @@ public class CommentsServiceImpl implements CommentsService {
         List<CommentDTO> comments = mCommentMapper.selectByInterviewId(interviewId);
         return new PageUtil<>(comments);
     }
+
+    @Override
+    public boolean delete(Integer[] commentIds, Integer[] replyIds) {
+
+        final int commentCount = mCommentMapper.deleteById(commentIds);
+
+        if (replyIds.length != 0) {
+            final int replyCount = mReplyMapper.deleteById(replyIds);
+            return commentCount > 0 && replyCount > 0;
+        }
+
+        return commentCount > 0;
+
+    }
 }

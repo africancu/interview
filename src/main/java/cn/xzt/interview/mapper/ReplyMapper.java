@@ -16,4 +16,5 @@ public interface ReplyMapper {
 
     int updateContent(@Param("id") int id, @Param("content") String content);
 
+    int deleteById(Integer[] replyIds);
 }

@@ -10,11 +10,15 @@ import cn.xzt.interview.domain.Blacklist;
 import cn.xzt.interview.domain.CommentReply;
 import cn.xzt.interview.service.BlacklistService;
 import cn.xzt.interview.service.CommentsService;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  * Created by Jay on 2018/10/23 09:42.
@@ -216,5 +220,44 @@ public class CommentsController {
         }
 
         return R.ok();
+    }
+
+    /**
+     * 删除评论与回复记录
+     * @param params
+     * {
+     *     "commentIds" : 评论 ID 集合,
+     *     "replyIds" : 回复 ID 集合
+     * }
+     */
+    @PostMapping("/delete")
+    public R delete(@RequestBody String params) {
+        R response = ParamCheckUtil.checkPrams(params, "commentIds", "replyIds");
+        if (response != null) {
+            return response;
+        }
+        JSONObject jsonObject = JSONObject.parseObject(params);
+        final JSONArray commentIdsArray = jsonObject.getJSONArray("commentIds");
+        final JSONArray replyIdsArray = jsonObject.getJSONArray("replyIds");
+
+        if (commentIdsArray.size() == 0) {
+            return R.error(ResultStatus.PARAM_EMPTY.getCode(), "commentIds 参数为空");
+        }
+
+
+        Integer[] commentArray = new Integer[commentIdsArray.size()];
+        Integer[] commentIds = commentIdsArray.toArray(commentArray);
+
+        Integer[] replyArray = new Integer[replyIdsArray.size()];
+        Integer[] replyIds = commentIdsArray.toArray(replyArray);
+
+
+
+        final boolean deleteResult = mCommentsService.delete(commentIds, replyIds);
+        if (deleteResult) {
+            return R.ok();
+        }
+
+        return R.error(ResultStatus.ERROR.getCode(), ResultStatus.ERROR.getMessage());
     }
 }

@@ -23,4 +23,5 @@ public interface CommentMapper {
 
     List<CommentDTO> selectByInterviewId(@Param("interviewId") int interviewId);
 
+    int deleteById(Integer[] commentIds);
 }

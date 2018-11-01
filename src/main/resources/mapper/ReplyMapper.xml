@@ -17,4 +17,11 @@
         SELECT * FROM `reply` WHERE interview_id=#{interviewId}
     </select>
 
+    <delete id="deleteById">
+        DELETE FROM `reply` WHERE reply_id IN
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>

@@ -59,7 +59,16 @@ public interface CommentsService {
 
     /**
      * 未审核评论列表
+     *
      * @param interviewId 访谈 ID
      */
     PageUtil<CommentDTO> selectByInterviewId(int currentPage, int pageSize, int interviewId);
+
+    /**
+     * 删除评论与回复记录
+     *
+     * @param commentIds 评论Ids
+     * @param replyIds   回复Ids
+     */
+    boolean delete(Integer[] commentIds, Integer[] replyIds);
 }

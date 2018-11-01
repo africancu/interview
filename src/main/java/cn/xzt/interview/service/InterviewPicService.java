@@ -37,7 +37,7 @@ public interface InterviewPicService {
     /**
      * 删除图片
      */
-    void removePic(InterviewPic interviewPic);
+    void removePic(Integer picId);
 
     /**
      * 删除图片

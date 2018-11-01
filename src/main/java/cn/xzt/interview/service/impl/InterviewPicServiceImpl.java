@@ -60,10 +60,9 @@ public class InterviewPicServiceImpl implements InterviewPicService {
     }
 
     @Override
-
-    public void removePic(InterviewPic interviewPic) {
-        if (interviewPic.getPicId() != null) {
-            interviewRemovePicMapper.removePic(interviewPic);
+    public void removePic(Integer picId) {
+        if (picId != null) {
+            interviewRemovePicMapper.removePic(picId);
         }
     }
 

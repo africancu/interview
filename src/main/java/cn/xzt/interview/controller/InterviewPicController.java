@@ -9,6 +9,7 @@ import cn.xzt.interview.domain.InterviewPic;
 
 import cn.xzt.interview.service.InterviewPicService;
 import cn.xzt.interview.vo.GetInterviewPicVO;
+import cn.xzt.interview.vo.RemoveInterviewPicVO;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
@@ -132,13 +133,16 @@ public class InterviewPicController {
      * 删除图片
      */
     @RequestMapping("/removePic")
-    public R removePic(@RequestBody List<InterviewPic> interviewPicList) {
+    public R removePic(@RequestBody RemoveInterviewPicVO removeInterviewPicVO) {
         R r = new R();
-        for (InterviewPic interviewPic : interviewPicList) {
-            interviewPicService.removePic(interviewPic);
+
+        List<Integer> picIds = removeInterviewPicVO.getPicIds();
+        for (Integer picId : picIds) {
+            interviewPicService.removePic(picId);
         }
         r.setCode(ResultStatus.OK.getCode());
         r.setMessage(ResultStatus.OK.getMessage());
+
         return r;
     }
 
@@ -162,7 +166,7 @@ public class InterviewPicController {
         List<String> list = Arrays.asList(split);
         interviewPicService.removePics(list);
         return R.ok();
-
-
     }
+
+
 }

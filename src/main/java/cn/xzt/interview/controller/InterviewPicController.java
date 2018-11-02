@@ -2,6 +2,7 @@ package cn.xzt.interview.controller;
 
 import cn.xzt.interview.common.constant.ResultStatus;
 
+import cn.xzt.interview.common.utils.FileUploadUtil;
 import cn.xzt.interview.common.utils.ParamCheckUtil;
 import cn.xzt.interview.common.utils.R;
 import cn.xzt.interview.common.utils.StringUtil;
@@ -14,8 +15,8 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,11 @@ import java.util.List;
 public class InterviewPicController {
     @Autowired
     private InterviewPicService interviewPicService;
+    @Value("${nginx_url}")
+    private String urls;
+
+    @Value("${physics_url}")
+    private String physics_url;
 
     /**
      * 删除访谈
@@ -49,16 +55,11 @@ public class InterviewPicController {
      */
     @RequestMapping("/remove")
     public R removeInterview(@RequestParam(value = "id") Integer id) {
-        R r = new R();
         if (id != null) {
             interviewPicService.removeInterview(id);
-            r.setCode(ResultStatus.OK.getCode());
-            r.setMessage(ResultStatus.OK.getMessage());
-            return r;
+            return R.ok();
         } else {
-            r.setCode(ResultStatus.BAD_REQUEST.getCode());
-            r.setMessage(ResultStatus.BAD_REQUEST.getMessage());
-            return r;
+            return R.error();
         }
     }
 
@@ -68,19 +69,16 @@ public class InterviewPicController {
      * @param getInterviewPicVO
      * @return
      */
+
+
     @RequestMapping("/images")
     public R getImages(@RequestBody GetInterviewPicVO getInterviewPicVO) {
         R r = new R();
         List<InterviewPic> interviewPicList = interviewPicService.getImages(getInterviewPicVO);
         if (interviewPicList != null && interviewPicList.size() > 0) {
-            r.setCode(ResultStatus.OK.getCode());
-            r.setMessage(ResultStatus.OK.getMessage());
-            r.setResult(interviewPicList);
-            return r;
+            return R.ok(interviewPicList);
         } else {
-            r.setCode(ResultStatus.BAD_REQUEST.getCode());
-            r.setMessage(ResultStatus.BAD_REQUEST.getMessage());
-            return r;
+            return R.error();
         }
     }
 
@@ -91,42 +89,38 @@ public class InterviewPicController {
      */
     @RequestMapping("/uploadImages")
     public R uploadImages(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) throws IOException {
-        R r = new R();
         //获取访谈ID
         String interviewId = request.getParameter("interviewId");
-        // 盘符地址
-        String disk = "D:\\";
-        // 网络地址
-        String httpUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/";
-        // 文件上传根目录
-        String uploadRoot = "fileroot";
-        // 根目录下存放文件的相对目录
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String format = dateFormat.format(date);
-        String relativePath = format + "\\" + interviewId + "\\";
-        // 文件的存放目录
-        String dir = disk + uploadRoot + "\\" + relativePath;
+        Integer interviewIdTwo = Integer.valueOf(interviewId).intValue();
+
         try {
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
-                    String fileFullName = file.getOriginalFilename();
-                    InterviewPic interviewPic = new InterviewPic();
-                    interviewPic.setInterviewId(Integer.valueOf(interviewId).intValue());
-                    interviewPic.setPicUrl(httpUrl + uploadRoot + "/" + relativePath.replace("\\", "/") + fileFullName);
-                    FileUtils.copyInputStreamToFile(file.getInputStream(), new File(dir + fileFullName));
-                    interviewPicService.loadPic(interviewPic);
+                    //判断图片格式
+                    String fileName = file.getOriginalFilename();
+                    String suffix = fileName.substring(fileName.lastIndexOf("."));
+                    if (suffix.equals(".png") || suffix.equals(".jpg")) {
+
+                        String uploadUrl = FileUploadUtil.upload(physics_url, file, request);
+
+                        InterviewPic interviewPic = new InterviewPic();
+                        interviewPic.setInterviewId(interviewIdTwo);
+                        interviewPic.setPicUrl(urls + uploadUrl);
+                        interviewPicService.loadPic(interviewPic);
+                    } else {
+
+                        return R.error(100, "格式错误");
+                    }
                 }
 
             }
-            r.setCode(ResultStatus.OK.getCode());
-            r.setMessage(ResultStatus.OK.getMessage());
+
         } catch (Exception e) {
             e.printStackTrace();
-            r.setCode(ResultStatus.SERVER_ERROR.getCode());
-            r.setMessage(ResultStatus.SERVER_ERROR.getMessage());
+            return R.error();
         }
-        return r;
+        return R.ok();
+
     }
 
     /**
@@ -134,39 +128,19 @@ public class InterviewPicController {
      */
     @RequestMapping("/removePic")
     public R removePic(@RequestBody RemoveInterviewPicVO removeInterviewPicVO) {
-        R r = new R();
+
 
         List<Integer> picIds = removeInterviewPicVO.getPicIds();
+        if (picIds == null && picIds.size() == 0) {
+            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+        }
         for (Integer picId : picIds) {
             interviewPicService.removePic(picId);
         }
-        r.setCode(ResultStatus.OK.getCode());
-        r.setMessage(ResultStatus.OK.getMessage());
-
-        return r;
-    }
-
-    /**
-     * 删除图片
-     */
-    @RequestMapping("/removePics")
-    public R removePics(@RequestBody String params) {
-        R response = ParamCheckUtil.checkPrams(params, "ids");
-        if (response != null) {
-            return response;
-        }
-
-        JSONObject jsonObject = JSONObject.parseObject(params);
-        String ids = jsonObject.getString("ids");
-        log.info("传入的ids为----------> {}", ids);
-        if (StringUtil.isBlank(ids)) {
-            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
-        }
-        String[] split = ids.split(",");
-        List<String> list = Arrays.asList(split);
-        interviewPicService.removePics(list);
         return R.ok();
     }
+
+
 
 
 }

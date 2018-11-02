@@ -54,7 +54,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping("/create")
-    public R sava(MultipartFile files, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+    public R sava(@RequestParam(value = "files",required = false) MultipartFile files, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
 
         try {

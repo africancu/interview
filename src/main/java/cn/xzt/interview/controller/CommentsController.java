@@ -232,7 +232,7 @@ public class CommentsController {
      */
     @PostMapping("/delete")
     public R delete(@RequestBody String params) {
-        R response = ParamCheckUtil.checkPrams(params, "commentIds", "replyIds");
+        R response = ParamCheckUtil.checkPrams(params, "commentIds");
         if (response != null) {
             return response;
         }

@@ -224,11 +224,11 @@ public class CommentsController {
 
     /**
      * 删除评论与回复记录
-     * @param params
-     * {
-     *     "commentIds" : 评论 ID 集合,
-     *     "replyIds" : 回复 ID 集合
-     * }
+     *
+     * @param params {
+     *               "commentIds" : 评论 ID 集合,
+     *               "replyIds" : 回复 ID 集合
+     *               }
      */
     @PostMapping("/delete")
     public R delete(@RequestBody String params) {
@@ -248,10 +248,14 @@ public class CommentsController {
         Integer[] commentArray = new Integer[commentIdsArray.size()];
         Integer[] commentIds = commentIdsArray.toArray(commentArray);
 
-        Integer[] replyArray = new Integer[replyIdsArray.size()];
-        Integer[] replyIds = commentIdsArray.toArray(replyArray);
 
-
+        Integer[] replyIds;
+        if (replyIdsArray != null) {
+            Integer[] replyArray = new Integer[replyIdsArray.size()];
+            replyIds = replyIdsArray.toArray(replyArray);
+        } else {
+            replyIds = new Integer[0];
+        }
 
         final boolean deleteResult = mCommentsService.delete(commentIds, replyIds);
         if (deleteResult) {

@@ -83,6 +83,7 @@ public class BlacklistController {
         if (StringUtil.isBlank(ip) || StringUtil.isBlank(visitor)) {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
         }
+
         Blacklist blacklist = new Blacklist();
         blacklist.setIp(ip);
         blacklist.setVisitor(visitor);

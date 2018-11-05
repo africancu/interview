@@ -1,6 +1,7 @@
 package cn.xzt.interview.service.impl;
 
 
+import cn.xzt.interview.common.utils.PageUtil;
 import cn.xzt.interview.domain.InterviewPic;
 import cn.xzt.interview.mapper.InterviewGetPicMapper;
 import cn.xzt.interview.mapper.InterviewLoadPicMapper;
@@ -10,6 +11,7 @@ import cn.xzt.interview.service.InterviewPicService;
 import cn.xzt.interview.vo.GetInterviewPicVO;
 import com.baomidou.mybatisplus.plugins.Page;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,14 +41,15 @@ public class InterviewPicServiceImpl implements InterviewPicService {
     }
 
     @Override
-    public List<InterviewPic> getImages(GetInterviewPicVO getInterviewPicVO) {
+    public PageUtil<InterviewPic> getImages(GetInterviewPicVO getInterviewPicVO) {
         if (getInterviewPicVO.getInterviewId() != null) {
             Integer pageNum = getInterviewPicVO.getPageNum();
             Integer pageSize = getInterviewPicVO.getPageSize();
-            Page<InterviewPic> page = new Page<>(pageNum, pageSize);
 
-            List<InterviewPic> interviewPicList = interviewGetPicMapper.getImages(page, getInterviewPicVO);
-            return interviewPicList;
+            PageHelper.startPage(pageNum, pageSize);
+
+            List<InterviewPic> interviewPicList = interviewGetPicMapper.getImages(getInterviewPicVO);
+            return new PageUtil<>(interviewPicList);
         }
         return null;
 

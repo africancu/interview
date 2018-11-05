@@ -10,4 +10,29 @@
    </insert>
 
 
+    <update id="updateByPrimaryKeySelective"  >
+        update speaker_opinion
+        <set >
+            <if test="speakerId != null" >
+                speaker_id = #{speakerId},
+            </if>
+            <if test="content != null" >
+                content = #{content},
+            </if>
+        </set>
+        where opinion_id = #{opinionId}
+    </update>
+
+
+    <!--批量删除，假删除-->
+    <update id="romove" parameterType="java.lang.String">
+        update speaker_opinion
+        set  enable=1
+        where opinion_id in
+        <foreach collection="array"  item="item"
+                 separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>

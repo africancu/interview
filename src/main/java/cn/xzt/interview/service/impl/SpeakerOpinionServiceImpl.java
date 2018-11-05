@@ -23,4 +23,15 @@ public class SpeakerOpinionServiceImpl implements SpeakerOpinionService {
     public void addspeakerOpinion(SpeakerOpinion speakerOpinion) {
         speakerOpinionMapper.addspeakerOpinion(speakerOpinion);
     }
+
+
+    @Override
+    public int updateByPrimaryKeySelective(SpeakerOpinion speakerOpinion) {
+        return speakerOpinionMapper.updateByPrimaryKeySelective(speakerOpinion);
+    }
+
+    @Override
+    public void romove(String[] array) {
+        speakerOpinionMapper.romove(array);
+    }
 }

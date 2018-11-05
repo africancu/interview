@@ -18,6 +18,7 @@ import javax.validation.Valid;
  * @Description:
  * @Auther: lyj
  * @Date: 2018/11/1 17:48
+ * 文字实录
  */
 
 @RestController
@@ -44,6 +45,42 @@ public class SpeakerOpinionController {
             speakerOpinion.setEnable(0);
             speakerOpinionService.addspeakerOpinion(speakerOpinion);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return basicResponse;
+
+    }
+
+
+    @RequestMapping("/edit")
+    public R edit(@Valid SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
+        R basicResponse = new R();
+
+        try {
+            if(null==speakerOpinion.getOpinionId()){
+                basicResponse.setCode(300);
+                basicResponse.setMessage("编号不能为空！");
+            }
+            speakerOpinionService.updateByPrimaryKeySelective(speakerOpinion);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return basicResponse;
+
+    }
+
+    @RequestMapping("/remove")
+    public R remove(String[] ids) throws Exception {
+        R basicResponse = new R();
+
+        try {
+            if(ids==null || ids.length==0){
+                basicResponse.setCode(300);
+                basicResponse.setMessage("编号不能为空！");
+            }
+            speakerOpinionService.romove(ids);
         } catch (Exception e) {
             e.printStackTrace();
         }

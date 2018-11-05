@@ -9,4 +9,8 @@ import cn.xzt.interview.domain.SpeakerOpinion;
  */
 public interface SpeakerOpinionMapper {
     void addspeakerOpinion(SpeakerOpinion speakerOpinion);
+
+    int updateByPrimaryKeySelective(SpeakerOpinion speakerOpinion);
+
+    void romove(String[] array);
 }

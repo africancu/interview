@@ -13,11 +13,11 @@ import java.util.List;
  * @Date: 2018/11/1 17:33
  */
 public interface SpeakerOpinionMapper {
-    void addspeakerOpinion(SpeakerOpinion speakerOpinion);
+    void addSpeakerOpinion(SpeakerOpinion speakerOpinion);
 
     int updateByPrimaryKeySelective(SpeakerOpinion speakerOpinion);
 
-    void romove(String[] array);
+    void remove(Integer[] ids);
 
     List<SpeakerOpinionDTO> findAll(@Param("interviewId") String interviewId);
 }

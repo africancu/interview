@@ -1,15 +1,20 @@
 package cn.xzt.interview.controller;
 
 import cn.xzt.interview.DTO.SpeakerOpinionDTO;
+import cn.xzt.interview.common.constant.ResultStatus;
 import cn.xzt.interview.common.utils.PageUtil;
+import cn.xzt.interview.common.utils.ParamCheckUtil;
 import cn.xzt.interview.common.utils.R;
 import cn.xzt.interview.common.utils.StringUtil;
 import cn.xzt.interview.domain.SpeakerOpinion;
 import cn.xzt.interview.service.SpeakerOpinionService;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,16 +40,16 @@ public class SpeakerOpinionController {
         R basicResponse = new R();
 
         try {
-            if(StringUtil.isBlank(speakerOpinion.getContent())){
+            if (StringUtil.isBlank(speakerOpinion.getContent())) {
                 basicResponse.setCode(300);
                 basicResponse.setMessage("实录文字不能为空！");
             }
-            if(null!=speakerOpinion.getSpeakerId() && speakerOpinion.getSpeakerId()<=0){
+            if (null != speakerOpinion.getSpeakerId() && speakerOpinion.getSpeakerId() <= 0) {
                 basicResponse.setCode(300);
                 basicResponse.setMessage("嘉宾不能为空！");
             }
             speakerOpinion.setEnable(0);
-            speakerOpinionService.addspeakerOpinion(speakerOpinion);
+            speakerOpinionService.addSpeakerOpinion(speakerOpinion);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +64,7 @@ public class SpeakerOpinionController {
         R basicResponse = new R();
 
         try {
-            if(null==speakerOpinion.getOpinionId()){
+            if (null == speakerOpinion.getOpinionId()) {
                 basicResponse.setCode(300);
                 basicResponse.setMessage("编号不能为空！");
             }
@@ -73,38 +78,45 @@ public class SpeakerOpinionController {
     }
 
     @RequestMapping("/remove")
-    public R remove(String[] ids) throws Exception {
-        R basicResponse = new R();
-
-        try {
-            if(ids==null || ids.length==0){
-                basicResponse.setCode(300);
-                basicResponse.setMessage("编号不能为空！");
-            }
-            speakerOpinionService.romove(ids);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public R remove(@RequestBody String params) {
+        R response = ParamCheckUtil.checkPrams(params, "ids");
+        if (response != null) {
+            return response;
         }
-        return basicResponse;
 
+        JSONObject jsonObject = JSONObject.parseObject(params);
+
+        final JSONArray idsArray = jsonObject.getJSONArray("ids");
+
+        if (idsArray.isEmpty()) {
+            return R.error(300, "编号不能为空");
+        }
+        try {
+            Integer[] ids = idsArray.toArray(new Integer[idsArray.size()]);
+            speakerOpinionService.remove(ids);
+        } catch (ArrayStoreException e) {
+            return R.error(ResultStatus.PARAM_ERROR.getCode(), ResultStatus.PARAM_ERROR.getMessage()+" ：id 为 int 类型");
+        }
+
+        return R.ok();
     }
 
     @RequestMapping("/list")
-    public R findAll(String interviewId,Integer currentPage, Integer pageSize) throws Exception {
+    public R findAll(String interviewId, Integer currentPage, Integer pageSize) throws Exception {
         R basicResponse = new R();
 
         try {
-            if(StringUtil.isBlank(interviewId)){
+            if (StringUtil.isBlank(interviewId)) {
                 basicResponse.setCode(300);
                 basicResponse.setMessage("实录文字不能为空！");
             }
-            if (currentPage == null || pageSize == null){
+            if (currentPage == null || pageSize == null) {
                 basicResponse.setCode(600);
                 basicResponse.setMessage("缺少分页参数");
                 return basicResponse;
             }
             PageHelper.startPage(currentPage, pageSize);
-            PageUtil<SpeakerOpinionDTO> idto=speakerOpinionService.findAll(interviewId,currentPage,pageSize);
+            PageUtil<SpeakerOpinionDTO> idto = speakerOpinionService.findAll(interviewId, currentPage, pageSize);
             basicResponse.setCode(200);
             basicResponse.setMessage("成功");
             basicResponse.setResult(idto);
@@ -115,4 +127,4 @@ public class SpeakerOpinionController {
 
     }
 
-    }
+}

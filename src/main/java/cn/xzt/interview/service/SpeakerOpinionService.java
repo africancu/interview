@@ -12,11 +12,11 @@ import java.util.List;
  * @Date: 2018/11/1 17:45
  */
 public interface SpeakerOpinionService {
-    void addspeakerOpinion(SpeakerOpinion speakerOpinion);
+    void addSpeakerOpinion(SpeakerOpinion speakerOpinion);
 
     int updateByPrimaryKeySelective(SpeakerOpinion speakerOpinion);
 
-    void romove(String[] array);
+    void remove(Integer[] ids);
 
     PageUtil<SpeakerOpinionDTO> findAll(String interviewId, Integer currentPage, Integer pageSize);
 }

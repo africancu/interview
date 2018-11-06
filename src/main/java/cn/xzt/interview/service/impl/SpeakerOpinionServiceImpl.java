@@ -6,7 +6,6 @@ import cn.xzt.interview.domain.SpeakerOpinion;
 import cn.xzt.interview.mapper.SpeakerOpinionMapper;
 import cn.xzt.interview.service.SpeakerOpinionService;
 import com.github.pagehelper.PageHelper;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,8 @@ public class SpeakerOpinionServiceImpl implements SpeakerOpinionService {
     private SpeakerOpinionMapper speakerOpinionMapper;
 
     @Override
-    public void addspeakerOpinion(SpeakerOpinion speakerOpinion) {
-        speakerOpinionMapper.addspeakerOpinion(speakerOpinion);
+    public void addSpeakerOpinion(SpeakerOpinion speakerOpinion) {
+        speakerOpinionMapper.addSpeakerOpinion(speakerOpinion);
     }
 
 
@@ -35,8 +34,8 @@ public class SpeakerOpinionServiceImpl implements SpeakerOpinionService {
     }
 
     @Override
-    public void romove(String[] array) {
-        speakerOpinionMapper.romove(array);
+    public void remove(Integer[] ids) {
+        speakerOpinionMapper.remove(ids);
     }
 
     @Override

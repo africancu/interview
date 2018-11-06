@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,7 +53,7 @@ public class InterviewController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/create")
+    @RequestMapping(value = "/create",method=RequestMethod.POST)
     public R sava(MultipartFile files,String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
 
@@ -95,7 +96,7 @@ public class InterviewController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/edit")
+    @RequestMapping(value="/edit",method=RequestMethod.POST)
     public R update(MultipartFile files, String[] speakername,@Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
 
@@ -141,7 +142,7 @@ public class InterviewController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/uploadVideo")
+    @RequestMapping(value = "/uploadVideo",method=RequestMethod.POST)
     public R updateVideo(MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
 

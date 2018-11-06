@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -30,7 +31,7 @@ public class SpeakerOpinionController {
     private SpeakerOpinionService speakerOpinionService;
 
 
-    @RequestMapping("/create")
+    @RequestMapping(value="/create",method=RequestMethod.POST)
     public R sava(@Valid SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
         R basicResponse = new R();
 
@@ -54,7 +55,7 @@ public class SpeakerOpinionController {
     }
 
 
-    @RequestMapping("/edit")
+    @RequestMapping(value="/edit",method=RequestMethod.POST)
     public R edit(@Valid SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
         R basicResponse = new R();
 
@@ -72,7 +73,7 @@ public class SpeakerOpinionController {
 
     }
 
-    @RequestMapping("/remove")
+    @RequestMapping(value="/remove")
     public R remove(String[] ids) throws Exception {
         R basicResponse = new R();
 

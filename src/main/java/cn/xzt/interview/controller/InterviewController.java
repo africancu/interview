@@ -2,6 +2,7 @@ package cn.xzt.interview.controller;
 
 import cn.xzt.interview.DTO.InterviewDTO;
 import cn.xzt.interview.DTO.SpeakerDTO;
+import cn.xzt.interview.DTO.VisitorDTO;
 import cn.xzt.interview.common.constant.ResultStatus;
 import cn.xzt.interview.common.utils.FileUploadUtil;
 import cn.xzt.interview.common.utils.PageUtil;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -235,4 +237,31 @@ public class InterviewController {
 
     }
 
+    /**
+     * 获取嘉宾列表
+     *
+     * @param interviewId 访谈ID
+     */
+    @GetMapping("/speakers")
+    public R speakersFromInterviewId(String interviewId) {
+
+        List<SpeakerDTO> speakerDTOList = interviewService.findByinterviewId(interviewId);
+
+        return R.ok(speakerDTOList);
+
+    }
+
+    /**
+     * 获取在线用户列表
+     *
+     * @param interviewId 访谈ID
+     */
+    @GetMapping("/visitors")
+    public R visitors(int interviewId, int currentPage, int pageSize) {
+
+        PageUtil<VisitorDTO> visitors = interviewService.visitors(interviewId, currentPage, pageSize);
+
+        return R.ok(visitors);
+
+    }
 }

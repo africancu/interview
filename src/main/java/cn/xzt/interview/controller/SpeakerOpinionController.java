@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class SpeakerOpinionController {
 
 
     @RequestMapping("/create")
-    public R sava(@Valid SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
+    public R sava(@RequestBody SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
         R basicResponse = new R();
 
         try {
@@ -59,8 +60,8 @@ public class SpeakerOpinionController {
     }
 
 
-    @RequestMapping("/edit")
-    public R edit(@Valid SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
+    @PostMapping("/edit")
+    public R edit(@RequestBody SpeakerOpinion speakerOpinion, BindingResult bindingResult) throws Exception {
         R basicResponse = new R();
 
         try {

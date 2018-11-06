@@ -107,7 +107,8 @@ public class InterviewController {
             }
             if (files != null && files.getSize() != 0 && !"0".equals(files.getSize())) {
                 String img = FileUploadUtil.upload(physics_url,files, request);
-                if(null!=interview.getType() || "0".equals(interview.getType())){ //视频
+                if(null!=interview.getType() || "0".equals(interview.getType())){
+                    //视频
                     interview.setPreVideoUrl(urls+img);
                 }else {
                     //图文预告

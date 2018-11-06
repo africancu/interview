@@ -38,8 +38,8 @@ public class InterviewController {
     @Autowired
     private InterviewService interviewService;
 
-    @Value("${nginx_url}")
-    private String urls;
+    @Value("${nginx_port}")
+    private String port;
 
     @Value("${physics_url}")
     private String physics_url;
@@ -56,7 +56,7 @@ public class InterviewController {
     @RequestMapping(value = "/create",method=RequestMethod.POST)
     public R sava(MultipartFile files,String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
             if (files != null && files.getSize() != 0
                     && !"0".equals(files.getSize())) {
@@ -99,7 +99,7 @@ public class InterviewController {
     @RequestMapping(value="/edit",method=RequestMethod.POST)
     public R update(MultipartFile files, String[] speakername,@Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
             if(interview.getInterviewId()==null || interview.getInterviewId()==0){
                 basicResponse.setCode(600);
@@ -145,7 +145,7 @@ public class InterviewController {
     @RequestMapping(value = "/uploadVideo",method=RequestMethod.POST)
     public R updateVideo(MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
             if(interview.getInterviewId()==null || interview.getInterviewId()==0){
                 basicResponse.setCode(600);

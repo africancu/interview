@@ -29,7 +29,10 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-nginx_url: http://localhost/
+
+nginx_port: 8090
 
 physics_url: c://upload/
+
+
 

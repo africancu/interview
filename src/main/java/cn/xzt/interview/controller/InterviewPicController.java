@@ -41,11 +41,11 @@ public class InterviewPicController {
     @Autowired
     private InterviewPicService interviewPicService;
 
-    @Value("${nginx_url}")
-    private String urls;
 
     @Value("${physics_url}")
     private String physics_url;
+    @Value("${nginx_port}")
+    private String port;
 
     /**
      * 删除访谈
@@ -89,6 +89,7 @@ public class InterviewPicController {
         //获取访谈ID
         String interviewId = request.getParameter("interviewId");
         Integer interviewIdTwo = Integer.valueOf(interviewId).intValue();
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         if (files == null) {
             return R.error();
         }

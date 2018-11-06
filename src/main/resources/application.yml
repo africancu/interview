@@ -33,3 +33,5 @@ nginx_url: http://localhost/
 
 physics_url: c://upload/
 
+nginx_port: 8090
+

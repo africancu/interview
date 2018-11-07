@@ -2,6 +2,8 @@ package cn.xzt.interview.DTO;
 
 import lombok.Data;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  */
 @Data
 public class InterviewDTO {
-    List<SpeakerDTO> speakerList;
+    List<SpeakerDTO> speakerList =new ArrayList<>();
 
     private Integer interviewId;
 

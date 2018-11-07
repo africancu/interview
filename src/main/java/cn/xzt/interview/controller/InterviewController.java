@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +53,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping(value = "/create",method=RequestMethod.POST)
-    public R sava(MultipartFile files,String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+    public R sava(@RequestParam(value = "files", required = false) MultipartFile files,String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
         String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
@@ -99,7 +96,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping(value="/edit",method=RequestMethod.POST)
-    public R update(MultipartFile files, String[] speakername,@Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
+    public R update(@RequestParam(value = "files", required = false) MultipartFile files, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
         String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
@@ -145,7 +142,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping(value = "/uploadVideo",method=RequestMethod.POST)
-    public R updateVideo(MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
+    public R updateVideo(@RequestParam(value = "files", required = false) MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
         String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {

@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by zxjaihhl on 2018/10/23.
  */
-public interface InterviewGetPicMapper extends BaseMapper<InterviewPic> {
+public interface InterviewGetPicMapper  {
 
     /**
      * 查看图片列表
      */
 
-    List<InterviewPic> getImages(Page page,GetInterviewPicVO getInterviewPicVO);
+    List<InterviewPic> getImages(GetInterviewPicVO getInterviewPicVO);
 }

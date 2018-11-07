@@ -16,16 +16,16 @@
 
     <select id="selectByPrimaryKey" resultType="cn.xzt.interview.DTO.InterviewDTO" >
         select
-        interview_id,  name, begin_time, end_time, compere, description, type,
-        status, pre_pic_url, pre_video_url, video_url, create_time, update_time
+        interview_id,  name, begin_time as beginTime, end_time as endTime, compere, description, type,
+        status, pre_pic_url as prePicUrl, pre_video_url as preVideoUrl, video_url as videoUrl, create_time as createTime, update_time as updateTime
         from interview
         where interview_id = #{interviewId,jdbcType=INTEGER}
     </select>
 
     <select id="findAll" resultType="cn.xzt.interview.DTO.InterviewDTO" >
         select
-        interview_id,  name,  compere, description, type,
-        status
+        interview_id,begin_time as beginTime,end_time as endTime,  name,  compere, description, type,
+        status, pre_pic_url as prePicUrl, pre_video_url as preVideoUrl, video_url as videoUrl
         from interview
         <choose>
             <when test=' status != null and "" != status '>

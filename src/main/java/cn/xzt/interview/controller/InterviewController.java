@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,15 +40,14 @@ public class InterviewController {
     @Autowired
     private InterviewService interviewService;
 
-    @Value("${nginx_url}")
-    private String urls;
+    @Value("${nginx_port}")
+    private String port;
 
     @Value("${physics_url}")
     private String physics_url;
 
     /**
      * 新增访谈
-     *
      * @param files
      * @param interview
      * @param bindingResult
@@ -53,26 +55,27 @@ public class InterviewController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/create")
-    public R sava(@RequestParam(value = "files",required = false) MultipartFile files, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/create",method=RequestMethod.POST)
+    public R sava(MultipartFile files,String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
         R basicResponse = new R();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
             if (files != null && files.getSize() != 0
                     && !"0".equals(files.getSize())) {
-                String img = FileUploadUtil.upload(physics_url, files, request);
-                if (interview.getType() == "0" || "0".equals(interview.getType())) { //视频
-                    interview.setPreVideoUrl(urls + img);
-                } else {
+                String img = FileUploadUtil.upload(physics_url,files, request);
+                if(null!=interview.getType() && "0".equals(interview.getType())){
+                    //视频
+                    interview.setPreVideoUrl(urls+img);
+                }else {
                     //图文预告
-                    interview.setPrePicUrl(urls + img);
+                    interview.setPrePicUrl(urls+img);
                 }
             }
             interviewService.insertInterview(interview);
-            if (null != speakername && speakername.length > 0) {
+            if(null!=speakername && speakername.length>0){
 
-                for (String num : speakername) {
-                    interviewService.insertSpeaker(interview.getInterviewId(), num);
+                for ( String num : speakername ) {
+                    interviewService.insertSpeaker(interview.getInterviewId(),num);
                 }
             }
 
@@ -88,7 +91,6 @@ public class InterviewController {
 
     /**
      * 修改访谈
-     *
      * @param files
      * @param interview
      * @param bindingResult
@@ -96,30 +98,31 @@ public class InterviewController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/edit")
-    public R update(MultipartFile files, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+    @RequestMapping(value="/edit",method=RequestMethod.POST)
+    public R update(MultipartFile files, String[] speakername,@Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
-            if (interview.getInterviewId() == null || interview.getInterviewId() == 0) {
+            if(interview.getInterviewId()==null || interview.getInterviewId()==0){
                 basicResponse.setCode(600);
                 basicResponse.setMessage("访谈编号不能为空！");
                 return basicResponse;
             }
             if (files != null && files.getSize() != 0 && !"0".equals(files.getSize())) {
-                String img = FileUploadUtil.upload(physics_url, files, request);
-                if (interview.getType() == "0" || "0".equals(interview.getType())) { //视频
-                    interview.setPreVideoUrl(urls + img);
-                } else {
+                String img = FileUploadUtil.upload(physics_url,files, request);
+                if(null!=interview.getType() || "0".equals(interview.getType())){
+                    //视频
+                    interview.setPreVideoUrl(urls+img);
+                }else {
                     //图文预告
-                    interview.setPrePicUrl(urls + img);
+                    interview.setPrePicUrl(urls+img);
                 }
             }
             interviewService.updateInterview(interview);
-            if (null != speakername && speakername.length > 0) {
+            if(null!=speakername && speakername.length>0){
                 interviewService.deleteSpeaker((interview.getInterviewId()).toString());
-                for (String num : speakername) {
-                    interviewService.insertSpeaker(interview.getInterviewId(), num);
+                for ( String num : speakername ) {
+                    interviewService.insertSpeaker(interview.getInterviewId(),num);
                 }
             }
             basicResponse.setCode(200);
@@ -134,7 +137,6 @@ public class InterviewController {
 
     /**
      * 上传视频
-     *
      * @param files
      * @param interview
      * @param bindingResult
@@ -142,20 +144,20 @@ public class InterviewController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/uploadVideo")
-    public R updateVideo(MultipartFile files, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/uploadVideo",method=RequestMethod.POST)
+    public R updateVideo(MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         try {
-            if (interview.getInterviewId() == null || interview.getInterviewId() == 0) {
+            if(interview.getInterviewId()==null || interview.getInterviewId()==0){
                 basicResponse.setCode(600);
                 basicResponse.setMessage("访谈编号不能为空！");
                 return basicResponse;
             }
 
             if (files != null && files.getSize() != 0 && !"0".equals(files.getSize())) {
-                String img = FileUploadUtil.upload(physics_url, files, request);
-                interview.setVideoUrl(urls + img);//视频地址
+                String img = FileUploadUtil.upload(physics_url,files, request);
+                    interview.setVideoUrl(urls+img);//视频地址
             }
             interviewService.updateInterview(interview);
             basicResponse.setCode(200);
@@ -169,10 +171,14 @@ public class InterviewController {
     }
 
 
+
+
+
+
+
     /**
      * 查询全部访谈记录
-     *
-     * @param status      0访谈未开始 1 访谈进行中 2 访谈结束',
+     * @param status  0访谈未开始 1 访谈进行中 2 访谈结束',
      * @param currentPage
      * @param pageSize
      * @return
@@ -181,13 +187,13 @@ public class InterviewController {
     public R findList(String status, Integer currentPage, Integer pageSize) {
         R basicResponse = new R();
         try {
-            if (currentPage == null || pageSize == null) {
+            if (currentPage == null || pageSize == null){
                 basicResponse.setCode(600);
                 basicResponse.setMessage("缺少分页参数");
                 return basicResponse;
             }
             PageHelper.startPage(currentPage, pageSize);
-            PageUtil<InterviewDTO> idto = interviewService.findAll(status, currentPage, pageSize);
+            PageUtil<InterviewDTO> idto=interviewService.findAll(status,currentPage,pageSize);
 
             basicResponse.setCode(200);
             basicResponse.setMessage("成功");
@@ -202,7 +208,6 @@ public class InterviewController {
 
     /**
      * 查询访谈详情
-     *
      * @param id 访谈编号
      * @return
      */
@@ -211,13 +216,13 @@ public class InterviewController {
         R basicResponse = new R();
 
         try {
-            if (StringUtil.isBlank(id)) {
+            if(StringUtil.isBlank(id)){
                 return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
             }
-            InterviewDTO idto = interviewService.selectByPrimaryKey(id);
-            if (null != idto) {
-                List<SpeakerDTO> speakerDTOList = interviewService.findByinterviewId(id);
-                if (speakerDTOList != null && speakerDTOList.size() > 0) {
+            InterviewDTO idto=interviewService.selectByPrimaryKey(id);
+            if(null!=idto){
+                List<SpeakerDTO> speakerDTOList=interviewService.findByinterviewId(id);
+                if(speakerDTOList!=null && speakerDTOList.size()>0){
                     idto.setSpeakerList(speakerDTOList);
                 }
             }

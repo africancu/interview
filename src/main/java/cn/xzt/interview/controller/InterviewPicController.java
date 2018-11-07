@@ -2,10 +2,7 @@ package cn.xzt.interview.controller;
 
 import cn.xzt.interview.common.constant.ResultStatus;
 
-import cn.xzt.interview.common.utils.FileUploadUtil;
-import cn.xzt.interview.common.utils.ParamCheckUtil;
-import cn.xzt.interview.common.utils.R;
-import cn.xzt.interview.common.utils.StringUtil;
+import cn.xzt.interview.common.utils.*;
 import cn.xzt.interview.domain.InterviewPic;
 
 import cn.xzt.interview.service.InterviewPicService;
@@ -40,13 +37,15 @@ import java.util.List;
 @RequestMapping(value = "interview")
 @Slf4j
 public class InterviewPicController {
+
     @Autowired
     private InterviewPicService interviewPicService;
-    @Value("${nginx_url}")
-    private String urls;
+
 
     @Value("${physics_url}")
     private String physics_url;
+    @Value("${nginx_port}")
+    private String port;
 
     /**
      * 删除访谈
@@ -69,13 +68,11 @@ public class InterviewPicController {
      * @param getInterviewPicVO
      * @return
      */
-
-
     @RequestMapping("/images")
     public R getImages(@RequestBody GetInterviewPicVO getInterviewPicVO) {
         R r = new R();
-        List<InterviewPic> interviewPicList = interviewPicService.getImages(getInterviewPicVO);
-        if (interviewPicList != null && interviewPicList.size() > 0) {
+        PageUtil<InterviewPic> interviewPicList = interviewPicService.getImages(getInterviewPicVO);
+        if (interviewPicList != null ) {
             return R.ok(interviewPicList);
         } else {
             return R.error();
@@ -92,29 +89,27 @@ public class InterviewPicController {
         //获取访谈ID
         String interviewId = request.getParameter("interviewId");
         Integer interviewIdTwo = Integer.valueOf(interviewId).intValue();
-
+        String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
+        if (files == null) {
+            return R.error();
+        }
         try {
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
                     //判断图片格式
                     String fileName = file.getOriginalFilename();
                     String suffix = fileName.substring(fileName.lastIndexOf("."));
-                    if (suffix.equals(".png") || suffix.equals(".jpg")) {
-
+                    if (suffix.equals(".png") || suffix.equals(".PNG") || suffix.equals(".jpg") || suffix.equals(".JPG")) {
                         String uploadUrl = FileUploadUtil.upload(physics_url, file, request);
-
                         InterviewPic interviewPic = new InterviewPic();
                         interviewPic.setInterviewId(interviewIdTwo);
                         interviewPic.setPicUrl(urls + uploadUrl);
                         interviewPicService.loadPic(interviewPic);
                     } else {
-
                         return R.error(100, "格式错误");
                     }
                 }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return R.error();
@@ -128,8 +123,6 @@ public class InterviewPicController {
      */
     @RequestMapping("/removePic")
     public R removePic(@RequestBody RemoveInterviewPicVO removeInterviewPicVO) {
-
-
         List<Integer> picIds = removeInterviewPicVO.getPicIds();
         if (picIds == null && picIds.size() == 0) {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
@@ -139,8 +132,6 @@ public class InterviewPicController {
         }
         return R.ok();
     }
-
-
 
 
 }

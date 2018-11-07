@@ -20,6 +20,7 @@ public enum ResultStatus {
     PARAM_EMPTY(600, "参数为空"),
     PARAM_INSUFFICIENT(601, "参数不全"),
     INVALID_JSON(602, "JSON格式错误"),
+    PARAM_ERROR(603, "参数错误"),
     NO_SERVICE(700, "未找到该服务"),
     ;
 

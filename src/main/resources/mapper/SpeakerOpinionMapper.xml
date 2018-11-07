@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.xzt.interview.mapper.SpeakerOpinionMapper">
-   <insert id="addspeakerOpinion">
+   <insert id="addSpeakerOpinion">
           insert into speaker_opinion ( speaker_id, content, enable
       )
     values ( #{speakerId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
@@ -9,5 +9,39 @@
       )
    </insert>
 
+    <select id="findAll" resultType="cn.xzt.interview.DTO.SpeakerOpinionDTO">
+        SELECT s.opinion_id as opinionId,
+	s.speaker_id as speakerId,
+	s.content as content,
+	k.`name` as speakerName,
+    s.create_time as createTime from speaker k
+    LEFT JOIN speaker_opinion s ON k.speaker_id = s.speaker_id
+    where s.`enable`=0 and k.interview_id= #{interviewId,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateByPrimaryKeySelective"  >
+        update speaker_opinion
+        <set >
+            <if test="speakerId != null" >
+                speaker_id = #{speakerId},
+            </if>
+            <if test="content != null" >
+                content = #{content},
+            </if>
+        </set>
+        where opinion_id = #{opinionId}
+    </update>
+
+
+    <!--批量删除，假删除-->
+    <update id="remove" >
+        update speaker_opinion
+        set  enable=1
+        where opinion_id in
+        <foreach collection="array"  item="item"
+                 separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
 
 </mapper>

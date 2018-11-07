@@ -26,7 +26,7 @@ public interface InterviewPicService {
     /**
      * 查询图片
      */
-    List<InterviewPic> getImages(GetInterviewPicVO getInterviewPicVO);
+    PageUtil<InterviewPic> getImages(GetInterviewPicVO getInterviewPicVO);
 
 
     /**

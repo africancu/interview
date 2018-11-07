@@ -8,10 +8,7 @@ import cn.xzt.interview.domain.InterviewPic;
 import cn.xzt.interview.service.InterviewPicService;
 import cn.xzt.interview.vo.GetInterviewPicVO;
 import cn.xzt.interview.vo.RemoveInterviewPicVO;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-
-import java.util.Arrays;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,9 +33,9 @@ public class InterviewPicController {
     @Autowired
     private InterviewPicService interviewPicService;
 
-
     @Value("${physics_url}")
     private String physics_url;
+
     @Value("${nginx_port}")
     private String port;
 
@@ -85,10 +77,11 @@ public class InterviewPicController {
      * @return
      */
     @RequestMapping("/uploadImages")
-    public R uploadImages(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) throws IOException {
+    public R uploadImages(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
         //获取访谈ID
         String interviewId = request.getParameter("interviewId");
         Integer interviewIdTwo = Integer.valueOf(interviewId).intValue();
+        List<InterviewPic> interviewPicList=new ArrayList<>();
         String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         if (files == null) {
             return R.error();
@@ -105,6 +98,7 @@ public class InterviewPicController {
                         interviewPic.setInterviewId(interviewIdTwo);
                         interviewPic.setPicUrl(urls + uploadUrl);
                         interviewPicService.loadPic(interviewPic);
+                        interviewPicList.add(interviewPicService.getPicTime(urls + uploadUrl));
                     } else {
                         return R.error(100, "格式错误");
                     }
@@ -114,7 +108,7 @@ public class InterviewPicController {
             e.printStackTrace();
             return R.error();
         }
-        return R.ok();
+        return R.ok(interviewPicList);
 
     }
 

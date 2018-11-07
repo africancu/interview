@@ -5,4 +5,14 @@
           insert into interview_pic(interview_id,pic_url) value (#{interviewId},#{picUrl})
     </insert>
 
+    <select id="getPicTime" parameterType="java.lang.String" resultType="cn.xzt.interview.domain.InterviewPic">
+        select i.pic_id as picId,
+        i.interview_id as interviewId,
+        i.pic_url as picUrl,
+        i.create_time as createTime,
+        i.update_time as updateTime
+        from interview_pic i
+        where i.pic_url=#{picUrl}
+    </select>
+
 </mapper>

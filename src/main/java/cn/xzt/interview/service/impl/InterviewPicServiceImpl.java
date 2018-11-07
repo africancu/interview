@@ -63,6 +63,16 @@ public class InterviewPicServiceImpl implements InterviewPicService {
     }
 
     @Override
+    public InterviewPic getPicTime(String picUrl) {
+        if(picUrl!=null){
+            return interviewLoadPicMapper.getPicTime(picUrl);
+        }else {
+            return null;
+        }
+
+    }
+
+    @Override
     public void removePic(Integer picId) {
         if (picId != null) {
             interviewRemovePicMapper.removePic(picId);

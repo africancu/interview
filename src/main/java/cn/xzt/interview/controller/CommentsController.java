@@ -92,11 +92,12 @@ public class CommentsController {
      *               "commentContent" : 评论内容,
      *               "replyContent" : 回复内容,
      *               "speakerId" : 嘉宾ID
+     *               "speakerName" : 嘉宾名
      *               }
      */
     @PostMapping("/audit")
     public R audit(@RequestBody String params) {
-        R response = ParamCheckUtil.checkPrams(params, "commentId", "replyContent", "speakerId");
+        R response = ParamCheckUtil.checkPrams(params, "commentId", "replyContent", "speakerId", "speakerName");
         if (response != null) {
             return response;
         }
@@ -107,8 +108,9 @@ public class CommentsController {
         final String commentContent = jsonObject.getString("commentContent");
         final String replyContent = jsonObject.getString("replyContent");
         final int speakerId = jsonObject.getIntValue("speakerId");
+        final String speakerName = jsonObject.getString("speakerName");
 
-        final boolean auditResult = mCommentsService.audit(commentId, commentContent, replyContent, speakerId);
+        final boolean auditResult = mCommentsService.audit(commentId, commentContent, replyContent, speakerId, speakerName);
 
         if (auditResult) {
             return R.ok();

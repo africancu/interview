@@ -4,7 +4,7 @@
 
     <insert id="insert">
 
-      INSERT INTO `reply` (comment_id,content,speaker_id) VALUES (#{commentId},#{content},#{speakerId})
+      INSERT INTO `reply` (comment_id,content,speaker_id,speaker_name) VALUES (#{commentId},#{content},#{speakerId},#{speakerName})
 
     </insert>
 

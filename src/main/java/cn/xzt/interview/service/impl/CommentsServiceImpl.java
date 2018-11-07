@@ -50,16 +50,16 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public boolean audit(int commentId, String commentContent, String replyContent, int speakerId) {
+    public boolean audit(int commentId, String commentContent, String replyContent, int speakerId, String speakerName) {
 
         if (!StringUtil.isBlank(commentContent)) {
             // 审核通过需要将评论的状态置为1，表示审核通过
             final int commentIndex = mCommentMapper.updateContent(commentId, commentContent, 1);
-            final int replyIndex = mReplyMapper.insert(commentId, replyContent, speakerId);
+            final int replyIndex = mReplyMapper.insert(commentId, replyContent, speakerId, speakerName);
 
             return commentIndex > 0 && replyIndex > 0;
         } else {
-            final int replyIndex = mReplyMapper.insert(commentId, replyContent, speakerId);
+            final int replyIndex = mReplyMapper.insert(commentId, replyContent, speakerId, speakerName);
             return replyIndex > 0;
         }
 

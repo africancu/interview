@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public interface ReplyMapper {
 
 
-    int insert(@Param("commentId") int commentId, @Param("content") String content, @Param("speakerId") int speakerId);
+    int insert(@Param("commentId") int commentId, @Param("content") String content, @Param("speakerId") int speakerId, @Param("speakerName") String speakerName);
 
     int updateContent(@Param("id") int id, @Param("content") String content);
 

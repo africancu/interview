@@ -14,6 +14,7 @@ public class ReplyDTO {
     private int interviewId;
     private String content;
     private int speakerId;
+    private String speakerName;
     private String createTime;
     private String updateTime;
 }

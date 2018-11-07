@@ -35,8 +35,9 @@ public interface CommentsService {
      * @param commentContent 评论内容
      * @param replyContent   回复内容
      * @param speakerId      回复者嘉宾 ID
+     * @param speakerName    回复者嘉宾名
      */
-    boolean audit(int commentId, String commentContent, String replyContent, int speakerId);
+    boolean audit(int commentId, String commentContent, String replyContent, int speakerId, String speakerName);
 
     /**
      * 编辑回复评论内容

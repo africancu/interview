@@ -7,4 +7,5 @@ import cn.xzt.interview.domain.InterviewPic;
  */
 public interface InterviewLoadPicMapper {
     void loadPic(InterviewPic interviewPic);
+    InterviewPic getPicTime(String picUrl);
 }

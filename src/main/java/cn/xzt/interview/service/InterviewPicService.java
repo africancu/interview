@@ -34,10 +34,15 @@ public interface InterviewPicService {
      */
     void loadPic(InterviewPic interviewPic);
 
+    InterviewPic getPicTime(String picUrl);
+
     /**
      * 删除图片
      */
     void removePic(Integer picId);
+
+
+
 
 
 }

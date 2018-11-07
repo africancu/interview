@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,7 +81,9 @@ public class CommentsServiceImpl implements CommentsService {
         PageHelper.startPage(currentPage, pageSize);
 
         List<CommentReply> comments = mCommentReplyMapper.comments(interviewId);
-
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
         return new PageUtil<>(comments);
     }
 
@@ -88,6 +91,9 @@ public class CommentsServiceImpl implements CommentsService {
     public PageUtil<CommentDTO> selectByInterviewId(int currentPage, int pageSize, int interviewId) {
         PageHelper.startPage(currentPage, pageSize);
         List<CommentDTO> comments = mCommentMapper.selectByInterviewId(interviewId);
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
         return new PageUtil<>(comments);
     }
 

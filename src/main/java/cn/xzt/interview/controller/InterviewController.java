@@ -192,7 +192,7 @@ public class InterviewController {
             }
             PageHelper.startPage(currentPage, pageSize);
             PageUtil<InterviewDTO> idto=interviewService.findAll(status,currentPage,pageSize);
-            if(null!=idto && idto.getSize()>0){
+            if(null!=idto.getList() && idto.getList().size()>0){
                 List<SpeakerDTO> speakerDTOList= null;
                 for (InterviewDTO aaa :idto.getList()) {
                     speakerDTOList = interviewService.findByinterviewId(aaa.getInterviewId().toString());

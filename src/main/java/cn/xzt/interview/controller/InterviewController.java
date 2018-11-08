@@ -145,6 +145,7 @@ public class InterviewController {
     public R updateVideo(@RequestParam(value = "files", required = false) MultipartFile files, @Valid Interview interview, BindingResult bindingResult,HttpServletRequest request) throws Exception {
         R basicResponse = new R();
         String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
+        long fileSize= files.getSize();
         try {
             if(interview.getInterviewId()==null || interview.getInterviewId()==0){
                 basicResponse.setCode(600);
@@ -191,7 +192,15 @@ public class InterviewController {
             }
             PageHelper.startPage(currentPage, pageSize);
             PageUtil<InterviewDTO> idto=interviewService.findAll(status,currentPage,pageSize);
-
+            if(null!=idto && idto.getSize()>0){
+                List<SpeakerDTO> speakerDTOList= null;
+                for (InterviewDTO aaa :idto.getList()) {
+                    speakerDTOList = interviewService.findByinterviewId(aaa.getInterviewId().toString());
+                    if(speakerDTOList!=null && speakerDTOList.size()>0){
+                        aaa.setSpeakerList(speakerDTOList);
+                    }
+                }
+            }
             basicResponse.setCode(200);
             basicResponse.setMessage("成功");
             basicResponse.setResult(idto);

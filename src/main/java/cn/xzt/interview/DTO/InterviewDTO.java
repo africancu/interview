@@ -46,6 +46,11 @@ public class InterviewDTO {
 
     //预告视频地址
     private String preVideoUrl;
+//`pre_video_size` video_size
+
+    private String preVideoSize;
+
+    private String videoSize;
 
     //视频地址
     private String videoUrl;

@@ -189,6 +189,7 @@ public class InterviewController {
                 basicResponse.setCode(600);
                 basicResponse.setMessage("缺少分页参数");
                 return basicResponse;
+
             }
             PageHelper.startPage(currentPage, pageSize);
             PageUtil<InterviewDTO> idto=interviewService.findAll(status,currentPage,pageSize);

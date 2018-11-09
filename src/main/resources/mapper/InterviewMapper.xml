@@ -32,6 +32,7 @@
                 where status = #{status}
             </when>
         </choose>
+        order by create_time desc
     </select>
 
     <insert id="insertInterview" useGeneratedKeys="true" keyProperty="interviewId">

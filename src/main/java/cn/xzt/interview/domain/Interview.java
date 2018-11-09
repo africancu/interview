@@ -42,6 +42,12 @@ public class Interview {
     //预告视频地址
     private String preVideoUrl;
 
+    //預告視頻大小
+    private String preVideoSize;
+
+    //視頻大小
+    private String videoSize;
+
     //视频地址
     private String videoUrl;
 

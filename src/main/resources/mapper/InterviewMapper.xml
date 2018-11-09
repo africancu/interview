@@ -4,7 +4,7 @@
 
     <sql id="Base_Column_List" >
     interview_id, category_id, name, begin_time, end_time, compere, description, type,
-    status, pre_pic_url, pre_video_url, video_url, create_time, update_time
+    status, pre_pic_url, pre_video_url, video_url, create_time, update_time ,video_size ,pre_video_size
     </sql>
 
     <select id="findByinterviewId" resultType="cn.xzt.interview.DTO.SpeakerDTO">
@@ -17,7 +17,8 @@
     <select id="selectByPrimaryKey" resultType="cn.xzt.interview.DTO.InterviewDTO" >
         select
         interview_id,  name, begin_time as beginTime, end_time as endTime, compere, description, type,
-        status, pre_pic_url as prePicUrl, pre_video_url as preVideoUrl, video_url as videoUrl, create_time as createTime, update_time as updateTime
+        status, pre_pic_url as prePicUrl, pre_video_url as preVideoUrl, video_url as videoUrl, create_time as createTime, update_time as updateTime,
+        video_size as videoSize,pre_video_size as preVideoSize
         from interview
         where interview_id = #{interviewId,jdbcType=INTEGER}
     </select>
@@ -25,7 +26,7 @@
     <select id="findAll" resultType="cn.xzt.interview.DTO.InterviewDTO" >
         select
         interview_id,begin_time as beginTime,end_time as endTime,  name,  compere, description, type,
-        status, pre_pic_url as prePicUrl, pre_video_url as preVideoUrl, video_url as videoUrl
+        status, pre_pic_url as prePicUrl, pre_video_url as preVideoUrl, video_url as videoUrl,video_size as videoSize,pre_video_size as preVideoSize
         from interview
         <choose>
             <when test=' status != null and "" != status '>
@@ -39,12 +40,12 @@
     insert into interview (interview_id, category_id, name,
       begin_time, end_time, compere,
       description, type, status,
-      pre_pic_url, pre_video_url, video_url
+      pre_pic_url, pre_video_url, video_url,video_size,pre_video_size
       )
     values (#{interviewId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
       #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{compere,jdbcType=VARCHAR},
       #{description,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
-      #{prePicUrl,jdbcType=VARCHAR}, #{preVideoUrl,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR})
+      #{prePicUrl,jdbcType=VARCHAR}, #{preVideoUrl,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR},#{videoSize},#{preVideoSize})
 
     </insert>
 
@@ -93,7 +94,12 @@
             <if test="videoUrl != null" >
                 video_url = #{videoUrl,jdbcType=VARCHAR},
             </if>
-
+            <if test="videoSize != null" >
+                video_size = #{videoSize},
+            </if>
+            <if test="preVideoSize != null" >
+                pre_video_size = #{preVideoSize},
+            </if>
             update_time =now(),
 
         </set>

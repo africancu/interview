@@ -2,6 +2,8 @@ package cn.xzt.interview.DTO;
 
 import lombok.Data;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  */
 @Data
 public class InterviewDTO {
-    List<SpeakerDTO> speakerList;
+    List<SpeakerDTO> speakerList =new ArrayList<>();
 
     private Integer interviewId;
 
@@ -44,6 +46,11 @@ public class InterviewDTO {
 
     //预告视频地址
     private String preVideoUrl;
+//`pre_video_size` video_size
+
+    private String preVideoSize;
+
+    private String videoSize;
 
     //视频地址
     private String videoUrl;

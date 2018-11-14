@@ -141,7 +141,7 @@ public class ProhibitController {
         InputStreamReader read = null;
         try {
             if (f.isFile() && f.exists()) {
-                read = new InputStreamReader(new FileInputStream(f), "UTF-8");
+                read = new InputStreamReader(new FileInputStream(f), "GBK");
                 BufferedReader bufferedReader = new BufferedReader(read);
                 String lineTxt = null;
                 while ((lineTxt = bufferedReader.readLine()) != null) {

@@ -35,3 +35,6 @@ physics_url: D://upload/
 
 nginx_port: 8090
 
+os_win: D://temp.txt
+os_linux: /opt/temp.txt
+

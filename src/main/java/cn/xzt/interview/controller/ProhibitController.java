@@ -10,6 +10,7 @@ import cn.xzt.interview.service.ProhibitService;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,10 @@ import java.util.*;
 public class ProhibitController {
     @Autowired
     private ProhibitService prohibitService;
+    @Value("${os_win}")
+    private String os_win;
+    @Value("${os_linux}")
+    private String os_linux;
 
     @GetMapping("/list")
     public R list(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam(required = false) String keyWord) {
@@ -130,7 +135,15 @@ public class ProhibitController {
         if (null == file || file.isEmpty()) {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
         }
-        String url = "C://temp.txt";
+
+        String url = null;
+        String os_type = System.getProperty("os.name");
+        if (os_type.toLowerCase().contains("window")){
+            url = os_win;
+        }else {
+            url = os_linux;
+        }
+
         try {
             file.transferTo(new File(url));
         } catch (IOException e) {

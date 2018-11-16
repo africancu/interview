@@ -14,14 +14,12 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -55,7 +53,7 @@ public class InterviewController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public R save(@RequestParam(value = "file", required = false) MultipartFile file, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
-        R basicResponse = new R();
+
         String urls = request.getScheme() + "://" + request.getServerName() + ":" + port + "/";
         try {
             if (file != null && !file.isEmpty()) {
@@ -76,15 +74,11 @@ public class InterviewController {
                     interviewService.insertSpeaker(interview.getInterviewId(), num);
                 }
             }
-
-            basicResponse.setCode(200);
-            basicResponse.setMessage("成功");
         } catch (Exception e) {
-            basicResponse.setCode(500);
-            basicResponse.setMessage("程序错误");
             e.printStackTrace();
+            return R.error();
         }
-        return basicResponse;
+        return R.ok(interview);
     }
 
     /**

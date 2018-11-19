@@ -14,7 +14,6 @@ spring:
      max-file-size: 10MB
      max-request-size: 10MB
 
-
 mybatis:
   config-location: classpath:mybatis-config.xml
   mapper-locations: classpath*:mapper/*Mapper.xml
@@ -28,9 +27,9 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-nginx_url: http://139.159.180.205/
+nginx_url: http://192.168.0.71/
 
-physics_url: /opt/upload/
+physics_url: D://upload/
 
 nginx_port: 8090
 

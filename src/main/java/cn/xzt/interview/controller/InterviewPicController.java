@@ -80,7 +80,7 @@ public class InterviewPicController {
     public R uploadImages(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
         //获取访谈ID
         String interviewId = request.getParameter("interviewId");
-        Integer interviewIdTwo = Integer.valueOf(interviewId).intValue();
+        Integer interviewIdTwo = Integer.valueOf(interviewId);
         List<InterviewPic> interviewPicList=new ArrayList<>();
         String urls=request.getScheme()+ "://" + request.getServerName()+":"+port+"/";
         if (files == null) {
@@ -91,16 +91,18 @@ public class InterviewPicController {
                 if (!file.isEmpty()) {
                     //判断图片格式
                     String fileName = file.getOriginalFilename();
-                    String suffix = fileName.substring(fileName.lastIndexOf("."));
-                    if (suffix.equals(".png") || suffix.equals(".PNG") || suffix.equals(".jpg") || suffix.equals(".JPG")) {
-                        String uploadUrl = FileUploadUtil.upload(physics_url, file, request);
-                        InterviewPic interviewPic = new InterviewPic();
-                        interviewPic.setInterviewId(interviewIdTwo);
-                        interviewPic.setPicUrl(urls + uploadUrl);
-                        interviewPicService.loadPic(interviewPic);
-                        interviewPicList.add(interviewPicService.getPicTime(urls + uploadUrl));
-                    } else {
-                        return R.error(100, "格式错误");
+                    if(fileName!=null){
+                        String suffix = fileName.substring(fileName.lastIndexOf("."));
+                        if (suffix.equals(".png") || suffix.equals(".PNG") || suffix.equals(".jpg") || suffix.equals(".JPG")) {
+                            String uploadUrl = FileUploadUtil.upload(physics_url, file, request);
+                            InterviewPic interviewPic = new InterviewPic();
+                            interviewPic.setInterviewId(interviewIdTwo);
+                            interviewPic.setPicUrl(urls + uploadUrl);
+                            interviewPicService.loadPic(interviewPic);
+                            interviewPicList.add(interviewPicService.getPicTime(urls + uploadUrl));
+                        } else {
+                            return R.error(100, "格式错误");
+                        }
                     }
                 }
             }
@@ -118,7 +120,7 @@ public class InterviewPicController {
     @RequestMapping("/removePic")
     public R removePic(@RequestBody RemoveInterviewPicVO removeInterviewPicVO) {
         List<Integer> picIds = removeInterviewPicVO.getPicIds();
-        if (picIds == null && picIds.size() == 0) {
+        if (picIds == null || picIds.size() == 0) {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
         }
         for (Integer picId : picIds) {

@@ -4,10 +4,7 @@ import cn.xzt.interview.DTO.InterviewDTO;
 import cn.xzt.interview.DTO.SpeakerDTO;
 import cn.xzt.interview.DTO.VisitorDTO;
 import cn.xzt.interview.common.constant.ResultStatus;
-import cn.xzt.interview.common.utils.FileUploadUtil;
-import cn.xzt.interview.common.utils.PageUtil;
-import cn.xzt.interview.common.utils.R;
-import cn.xzt.interview.common.utils.StringUtil;
+import cn.xzt.interview.common.utils.*;
 import cn.xzt.interview.domain.Interview;
 import cn.xzt.interview.service.InterviewService;
 import com.github.pagehelper.PageHelper;
@@ -196,7 +193,12 @@ public class InterviewController {
                 }
             }
 
-            R ok = R.ok(idto.getList());
+            RList ok = new RList();
+            ok.setData(idto.getList());
+            ok.setPageNum(idto.getPageNum());
+            ok.setPageSize(idto.getPageSize());
+            ok.setPages(idto.getPages());
+            ok.setSize(idto.getSize());
             ok.setCount(idto.getTotal());
             return ok;
         } catch (Exception e) {

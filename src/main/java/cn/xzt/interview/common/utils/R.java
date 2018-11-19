@@ -18,7 +18,6 @@ public class R {
      * 提示信息
      */
     private String msg;
-    private Long count;
     /**
      * 具体内容
      */

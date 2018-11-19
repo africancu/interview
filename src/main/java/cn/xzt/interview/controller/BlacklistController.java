@@ -2,10 +2,7 @@ package cn.xzt.interview.controller;
 
 import cn.xzt.interview.DTO.BlacklistDTO;
 import cn.xzt.interview.common.constant.ResultStatus;
-import cn.xzt.interview.common.utils.PageUtil;
-import cn.xzt.interview.common.utils.ParamCheckUtil;
-import cn.xzt.interview.common.utils.R;
-import cn.xzt.interview.common.utils.StringUtil;
+import cn.xzt.interview.common.utils.*;
 import cn.xzt.interview.domain.Blacklist;
 import cn.xzt.interview.service.BlacklistService;
 import com.alibaba.fastjson.JSONObject;
@@ -39,7 +36,12 @@ public class BlacklistController {
         }
         PageUtil<BlacklistDTO> list = blacklistService.list(pageNum, pageSize);
 
-        R ok = R.ok(list.getList());
+        RList ok = new RList();
+        ok.setData(list.getList());
+        ok.setPageNum(list.getPageNum());
+        ok.setPageSize(list.getPageSize());
+        ok.setPages(list.getPages());
+        ok.setSize(list.getSize());
         ok.setCount(list.getTotal());
 
         return ok;

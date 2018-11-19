@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ import java.util.List;
  * @Auther: lyj
  * @Date: 2018/10/23 11:54
  */
-@RestController
+@Controller
 @RequestMapping(value = "interview")
 @Slf4j
 public class InterviewController {
@@ -52,6 +53,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseBody
     public R save(@RequestParam(value = "file", required = false) MultipartFile file, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
 
         String urls = request.getScheme() + "://" + request.getServerName() + ":" + port + "/";
@@ -78,7 +80,9 @@ public class InterviewController {
             e.printStackTrace();
             return R.error();
         }
-        return R.ok(interview);
+        R ok = R.ok(interview);
+        log.info("{}",ok);
+        return ok;
     }
 
     /**
@@ -92,6 +96,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
     public R update(@RequestParam(value = "file", required = false) MultipartFile file, String[] speakername, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
 
         String urls = request.getScheme() + "://" + request.getServerName() + ":" + port + "/";
@@ -136,6 +141,7 @@ public class InterviewController {
      * @throws Exception
      */
     @RequestMapping(value = "/uploadVideo", method = RequestMethod.POST)
+    @ResponseBody
     public R updateVideo(@RequestParam(value = "file", required = false) MultipartFile file, @Valid Interview interview, BindingResult bindingResult, HttpServletRequest request) throws Exception {
 
         String urls = request.getScheme() + "://" + request.getServerName() + ":" + port + "/";
@@ -147,6 +153,7 @@ public class InterviewController {
             if (file != null && !file.isEmpty()) {
                 String img = FileUploadUtil.upload(physics_url, file, request);
                 interview.setVideoUrl(urls + img);//视频地址
+                interview.setVideoSize(String.valueOf(file.getSize()));
             }
             interviewService.updateInterview(interview);
             return R.ok(interview);
@@ -167,6 +174,7 @@ public class InterviewController {
      * @return
      */
     @RequestMapping("/list")
+    @ResponseBody
     public R findList(String status, Integer currentPage, Integer pageSize) {
         R basicResponse = new R();
         try {
@@ -205,6 +213,7 @@ public class InterviewController {
      * @return
      */
     @RequestMapping("/query")
+    @ResponseBody
     public R query(String id) {
         R basicResponse = new R();
 
@@ -237,6 +246,7 @@ public class InterviewController {
      * @param interviewId 访谈ID
      */
     @GetMapping("/speakers")
+    @ResponseBody
     public R speakersFromInterviewId(String interviewId) {
 
         List<SpeakerDTO> speakerDTOList = interviewService.findByinterviewId(interviewId);
@@ -251,6 +261,7 @@ public class InterviewController {
      * @param interviewId 访谈ID
      */
     @GetMapping("/visitors")
+    @ResponseBody
     public R visitors(int interviewId, int currentPage, int pageSize) {
 
         PageUtil<VisitorDTO> visitors = interviewService.visitors(interviewId, currentPage, pageSize);

@@ -7,7 +7,7 @@
             <id column="c_comment_id" property="commentId"/>
             <result column="c_interview_id" property="interviewId"/>
             <result column="c_visitor" property="visitor"/>
-            <!--<result column="visitor_ip" property="visitorIp"/>-->
+            <!--<data column="visitor_ip" property="visitorIp"/>-->
             <result column="c_content" property="content"/>
             <result column="c_status" property="status"/>
             <result column="c_create_time" property="createTime"/>

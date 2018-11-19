@@ -81,7 +81,7 @@ public class InterviewController {
             return R.error();
         }
         R ok = R.ok(interview);
-        log.info("{}",ok);
+        log.info("{}", ok);
         return ok;
     }
 
@@ -146,7 +146,7 @@ public class InterviewController {
 
         String urls = request.getScheme() + "://" + request.getServerName() + ":" + port + "/";
         try {
-            if (null == interview.getInterviewId()){
+            if (null == interview.getInterviewId()) {
                 return R.error(ResultStatus.PARAM_EMPTY.getCode(), "访谈编号为空");
             }
 
@@ -180,7 +180,7 @@ public class InterviewController {
         try {
             if (currentPage == null || pageSize == null) {
                 basicResponse.setCode(600);
-                basicResponse.setMessage("缺少分页参数");
+                basicResponse.setMsg("缺少分页参数");
                 return basicResponse;
 
             }
@@ -195,12 +195,13 @@ public class InterviewController {
                     }
                 }
             }
-            basicResponse.setCode(200);
-            basicResponse.setMessage("成功");
-            basicResponse.setResult(idto);
+
+            R ok = R.ok(idto.getList());
+            ok.setCount(idto.getTotal());
+            return ok;
         } catch (Exception e) {
             basicResponse.setCode(500);
-            basicResponse.setMessage("程序错误");
+            basicResponse.setMsg("程序错误");
             e.printStackTrace();
         }
         return basicResponse;
@@ -229,11 +230,11 @@ public class InterviewController {
                 }
             }
             basicResponse.setCode(200);
-            basicResponse.setMessage("成功");
-            basicResponse.setResult(idto);
+            basicResponse.setMsg("成功");
+            basicResponse.setData(idto);
         } catch (Exception e) {
             basicResponse.setCode(500);
-            basicResponse.setMessage("程序错误");
+            basicResponse.setMsg("程序错误");
             e.printStackTrace();
         }
         return basicResponse;

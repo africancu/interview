@@ -41,11 +41,11 @@ public class SpeakerOpinionController {
         try {
             if (StringUtil.isBlank(speakerOpinion.getContent())) {
                 basicResponse.setCode(300);
-                basicResponse.setMessage("实录文字不能为空！");
+                basicResponse.setMsg("实录文字不能为空！");
             }
             if (null != speakerOpinion.getSpeakerId() && speakerOpinion.getSpeakerId() <= 0) {
                 basicResponse.setCode(300);
-                basicResponse.setMessage("嘉宾不能为空！");
+                basicResponse.setMsg("嘉宾不能为空！");
             }
             speakerOpinion.setEnable(0);
             speakerOpinionService.addSpeakerOpinion(speakerOpinion);
@@ -65,7 +65,7 @@ public class SpeakerOpinionController {
         try {
             if (null == speakerOpinion.getOpinionId()) {
                 basicResponse.setCode(300);
-                basicResponse.setMessage("编号不能为空！");
+                basicResponse.setMsg("编号不能为空！");
             }
             speakerOpinionService.updateByPrimaryKeySelective(speakerOpinion);
 
@@ -107,18 +107,18 @@ public class SpeakerOpinionController {
         try {
             if (StringUtil.isBlank(interviewId)) {
                 basicResponse.setCode(300);
-                basicResponse.setMessage("实录文字不能为空！");
+                basicResponse.setMsg("实录文字不能为空！");
             }
             if (currentPage == null || pageSize == null) {
                 basicResponse.setCode(600);
-                basicResponse.setMessage("缺少分页参数");
+                basicResponse.setMsg("缺少分页参数");
                 return basicResponse;
             }
             PageHelper.startPage(currentPage, pageSize);
             PageUtil<SpeakerOpinionDTO> idto = speakerOpinionService.findAll(interviewId, currentPage, pageSize);
             basicResponse.setCode(200);
-            basicResponse.setMessage("成功");
-            basicResponse.setResult(idto);
+            basicResponse.setMsg("成功");
+            basicResponse.setData(idto);
         } catch (Exception e) {
             e.printStackTrace();
         }

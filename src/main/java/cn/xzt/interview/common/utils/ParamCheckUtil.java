@@ -24,7 +24,7 @@ public class ParamCheckUtil {
         R response = new R();
         if (StringUtil.isBlank(params)) {
             response.setCode(ResultStatus.PARAM_EMPTY.getCode());
-            response.setMessage(ResultStatus.PARAM_EMPTY.getMessage());
+            response.setMsg(ResultStatus.PARAM_EMPTY.getMessage());
             return response;
         }
 
@@ -36,14 +36,14 @@ public class ParamCheckUtil {
 
                 if (!StringUtil.isBlank(checkJsonKey)) {
                     response.setCode(ResultStatus.PARAM_INSUFFICIENT.getCode());
-                    response.setMessage(ResultStatus.PARAM_INSUFFICIENT.getMessage() + "，缺少参数：" + checkJsonKey);
+                    response.setMsg(ResultStatus.PARAM_INSUFFICIENT.getMessage() + "，缺少参数：" + checkJsonKey);
                     return response;
                 }
             }
 
         } catch (JSONException e) {
             response.setCode(ResultStatus.INVALID_JSON.getCode());
-            response.setMessage(ResultStatus.INVALID_JSON.getMessage());
+            response.setMsg(ResultStatus.INVALID_JSON.getMessage());
             return response;
         }
 

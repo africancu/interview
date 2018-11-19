@@ -36,7 +36,7 @@ public class ProhibitController {
     @GetMapping("/list")
     public R list(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam(required = false) String keyWord) {
 //        if (StringUtil.isBlank(pageNum) || StringUtil.isBlank(pageSize)) {
-//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMsg());
 //        }
 //        PageUtil<ProhibitWord> list = prohibitService.list(Integer.parseInt(pageNum), Integer.parseInt(pageSize), keyWord);
         PageUtil<ProhibitWord> list = prohibitService.list(pageNum, pageSize, keyWord);
@@ -53,7 +53,7 @@ public class ProhibitController {
 //    public R create(HttpServletRequest request) {
 //        String keyWord = request.getParameter("keyWord");
 //        if (StringUtil.isBlank(keyWord)) {
-//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMsg());
 //        }
 //        ProhibitWord prohibitWord = new ProhibitWord();
 //        prohibitWord.setWord(keyWord);
@@ -92,7 +92,7 @@ public class ProhibitController {
 //        String ids = request.getParameter("ids");
 //        log.info("传入的ids为----------> {}", ids);
 //        if (StringUtil.isBlank(ids)) {
-//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMsg());
 //        }
 //        String[] split = ids.split(",");
 //        List<String> list = Arrays.asList(split);

@@ -1,9 +1,7 @@
 package cn.xzt.interview.common.utils;
 
 import cn.xzt.interview.common.constant.ResultStatus;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @Auther: 周明军
@@ -19,21 +17,22 @@ public class R {
     /**
      * 提示信息
      */
-    private String message;
+    private String msg;
+    private Long count;
     /**
      * 具体内容
      */
-    private Object result;
+    private Object data;
 
 
     public R(){
         code = ResultStatus.OK.getCode();
-        message = ResultStatus.OK.getMessage();
+        msg = ResultStatus.OK.getMessage();
     }
 
     public static R ok(Object result){
         R r = new R();
-        r.result = result;
+        r.data = result;
         return r;
     }
 
@@ -48,7 +47,7 @@ public class R {
     public static R error(int code, String msg) {
         R r = new R();
         r.code = code;
-        r.message = msg;
+        r.msg = msg;
         return r;
     }
 

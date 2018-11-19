@@ -38,7 +38,11 @@ public class BlacklistController {
             return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
         }
         PageUtil<BlacklistDTO> list = blacklistService.list(pageNum, pageSize);
-        return R.ok(list);
+
+        R ok = R.ok(list.getList());
+        ok.setCount(list.getTotal());
+
+        return ok;
     }
 
 //    /**
@@ -52,14 +56,14 @@ public class BlacklistController {
 //        String ip = request.getParameter("ip");
 //        String visitor = request.getParameter("visitor");
 //        if (StringUtil.isBlank(ip) || StringUtil.isBlank(visitor)) {
-//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMessage());
+//            return R.error(ResultStatus.PARAM_EMPTY.getCode(), ResultStatus.PARAM_EMPTY.getMsg());
 //        }
 //        Blacklist blacklist = new Blacklist();
 //        blacklist.setIp(ip);
 //        blacklist.setVisitor(visitor);
 //        blacklist.setStatus(Blacklist.Status.DISABLE.getCode());
-//        Blacklist result = blacklistService.create(blacklist);
-//        return R.ok(result);
+//        Blacklist data = blacklistService.create(blacklist);
+//        return R.ok(data);
 //    }
 
     /**

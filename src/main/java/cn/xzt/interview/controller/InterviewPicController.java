@@ -1,10 +1,10 @@
 package cn.xzt.interview.controller;
 
 import cn.xzt.interview.common.constant.ResultStatus;
-
-import cn.xzt.interview.common.utils.*;
+import cn.xzt.interview.common.utils.FileUploadUtil;
+import cn.xzt.interview.common.utils.PageUtil;
+import cn.xzt.interview.common.utils.R;
 import cn.xzt.interview.domain.InterviewPic;
-
 import cn.xzt.interview.service.InterviewPicService;
 import cn.xzt.interview.vo.GetInterviewPicVO;
 import cn.xzt.interview.vo.RemoveInterviewPicVO;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

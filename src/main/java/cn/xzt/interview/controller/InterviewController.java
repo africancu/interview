@@ -14,10 +14,7 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-<<<<<<< HEAD
-=======
 import org.springframework.stereotype.Controller;
->>>>>>> 395a60928ef7c01d5ebd18a17b9b15daadb5e761
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

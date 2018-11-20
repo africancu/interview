@@ -116,7 +116,7 @@ public class SpeakerOpinionController {
             }
             PageHelper.startPage(currentPage, pageSize);
             PageUtil<SpeakerOpinionDTO> idto = speakerOpinionService.findAll(interviewId, currentPage, pageSize);
-            basicResponse.setCode(200);
+            basicResponse.setCode(0);
             basicResponse.setMsg("成功");
             basicResponse.setData(idto);
         } catch (Exception e) {

@@ -231,7 +231,7 @@ public class InterviewController {
                     idto.setSpeakerList(speakerDTOList);
                 }
             }
-            basicResponse.setCode(200);
+            basicResponse.setCode(0);
             basicResponse.setMsg("成功");
             basicResponse.setData(idto);
         } catch (Exception e) {
